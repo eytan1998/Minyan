@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "430912961857",
+    "firebase_url": "https://minyan-24233-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "minyan-24233",
+    "storage_bucket": "minyan-24233.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:430912961857:android:f8159ef1f6b4dc816275c0",
+        "android_client_info": {
+          "package_name": "com.example.minyan"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCy9QIJ1LrwXJRAdd-PI7H1zP1K4TGO-tk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

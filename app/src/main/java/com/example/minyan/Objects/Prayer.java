@@ -9,10 +9,10 @@ public class Prayer {
     public Prayer() {
     }
 
-    public Prayer(String email, String password) {
+    public Prayer(String email, String password, String name) {
         Email = email;
         Password = password;
-        name = email.substring(5);
+        this.name = name;
     }
 
     public String getEmail() {

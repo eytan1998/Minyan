@@ -13,12 +13,14 @@ import android.widget.Toast;
 
 import com.example.minyan.Objects.Prayer;
 import com.example.minyan.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
 import java.util.logging.Logger;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,14 +30,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Write a message to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        Bundle bundle = getIntent().getExtras();
+        //to get the user that logged
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-        String uid = bundle.getString("UID");
+        //to get user data
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("root");
 
-        myRef.child("Prayer").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.child("Prayer").child(Objects.requireNonNull(mAuth.getUid())).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ((TextView) findViewById(R.id.asd)).setText(snapshot.getValue(Prayer.class).toString());

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.SignUpActivity">
+
+    <EditText
+        android:id="@+id/editTextSignUpEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:hint="אימייל"
+        android:inputType="textEmailAddress"
+        app:layout_constraintStart_toStartOf="@+id/editTextSignUpName"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSignUpName" />
+
+    <EditText
+        android:id="@+id/editTextSignUpPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="פלאפון"
+        android:inputType="phone"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/editTextSignUpPassword2"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxSignUpIsGabai" />
+
+    <EditText
+        android:id="@+id/editTextSignUpPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:hint="סיסמא"
+        android:inputType="textPassword"
+        app:layout_constraintStart_toStartOf="@+id/editTextSignUpEmail"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSignUpEmail" />
+
+    <EditText
+        android:id="@+id/editTextSignUpPassword2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:hint="שוב סיסמא"
+        android:inputType="textPassword"
+        app:layout_constraintStart_toStartOf="@+id/editTextSignUpPassword"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSignUpPassword" />
+
+    <CheckBox
+        android:id="@+id/checkBoxSignUpIsGabai"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="גבאי?"
+        app:layout_constraintStart_toStartOf="@+id/editTextSignUpPassword2"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSignUpPassword2" />
+
+    <Button
+        android:id="@+id/buttonSignUpSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="@string/signIn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextSignUpName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:hint="שם מלא"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewSignUpInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="טקסט הסבר לגבי תהליך רישום של הגבאי"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/editTextSignUpPhone"
+        app:layout_constraintStart_toStartOf="@+id/editTextSignUpPhone"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSignUpPhone" />
+</androidx.constraintlayout.widget.ConstraintLayout>

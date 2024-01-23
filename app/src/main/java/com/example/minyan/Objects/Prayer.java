@@ -1,34 +1,29 @@
 package com.example.minyan.Objects;
 
-public class Prayer {
-    private String Email;
-    private String Password;
+import android.media.Image;
 
-    private String name;
+public class Prayer  {
+    public static String PRAYER = "PRAYER";
+    String name;
+    String email;
+    String quote;
 
-    public Prayer() {
-    }
+    Image image;
+    //TODO Conversation
 
-    public Prayer(String email, String password, String name) {
-        Email = email;
-        Password = password;
+
+    public Prayer(String name, String email) {
         this.name = name;
+        this.email = email;
+
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
-    }
-
-    public String getPassword() {
-        return Password;
-    }
-
-    public void setPassword(String password) {
-        Password = password;
+        this.email = email;
     }
 
     public String getName() {
@@ -39,11 +34,26 @@ public class Prayer {
         this.name = name;
     }
 
+    public String getQuote() {
+        return quote;
+    }
+
+    public void setQuote(String quote) {
+        this.quote = quote;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
         return "Prayer{" +
-                "Email='" + Email + '\'' +
-                ", Password='" + Password + '\'' +
+                "Email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 '}';
     }

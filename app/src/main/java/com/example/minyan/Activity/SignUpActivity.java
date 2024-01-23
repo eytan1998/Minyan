@@ -1,29 +1,27 @@
 package com.example.minyan.Activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.Checkable;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.minyan.Objects.Gabai;
 import com.example.minyan.Objects.Prayer;
 import com.example.minyan.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.ActionCodeSettings;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Objects;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -48,8 +46,7 @@ public class SignUpActivity extends AppCompatActivity {
         //set up firebase auth
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         //set up firebase database -> to save if successes signup
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
         checkBoxSignUpIsGabai.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -71,35 +68,49 @@ public class SignUpActivity extends AppCompatActivity {
                 //TODO add the gabai option
                 //TODO tell user if failure happened and witch
                 //TODO check if all ready sign in
-                //TODO check if need varify
+                //TODO check if need verify
                 //TODo check if bad email
                 //TODO check if bad password
+                //TODO check if valid phone
 
                 mAuth.createUserWithEmailAndPassword(editTextSignInEmail.getText().toString(),
                                 editTextSignInPassword.getText().toString())
                         .addOnCompleteListener(authTask -> {
                             if (authTask.isSuccessful()) {
+                                //if gabai
+                                if (checkBoxSignUpIsGabai.isChecked()) {
+                                    //todo maybe make collection of gabai waiting to verify
+                                    Gabai gabai = new Gabai(
+                                            editTextSignUpName.getText().toString(),
+                                            editTextSignInEmail.getText().toString(),
+                                            editTextSignUpPhone.getText().toString()
+                                    );
+
+                                    db.collection(Gabai.GABAI).document(mAuth.getUid()).set(gabai);
+
+
+                                }
+                                //pray and gabai has prayer account.
                                 Prayer prayer = new Prayer(
-                                        editTextSignInEmail.getText().toString()
-                                        , editTextSignInPassword.getText().toString()
-                                        , editTextSignUpName.getText().toString());
-                                myRef.child("root").child("Prayer").child(mAuth.getUid()).setValue(prayer);
-                                FirebaseUser user = mAuth.getCurrentUser();
+                                        editTextSignUpName.getText().toString()
+                                        , editTextSignInEmail.getText().toString()
+                                        );
+                                db.collection(Prayer.PRAYER).document(mAuth.getUid()).set(prayer);
 
-                                assert user != null;
-                                user.sendEmailVerification()
-                                        .addOnCompleteListener(emailSendTask -> {
-                                            //TODO check if worked
-                                        });
-
-                                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                                startActivity(intent);
-                            } else if (authTask.isCanceled()) {
-                                Toast.makeText(this, authTask.getResult().toString(), Toast.LENGTH_LONG).show();
                             }
+                            //send verification
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            assert user != null;
+                            user.sendEmailVerification()
+                                    .addOnCompleteListener(emailSendTask -> {
+                                        //TODO check if worked
+                                    });
+
+                            //move to login on success
+                            Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                            startActivity(intent);
                         });
             }
         });
-
     }
 }

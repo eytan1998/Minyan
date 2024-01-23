@@ -16,7 +16,7 @@ public class IntroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_intro);
 
         //TODO make pretty flat vector art with fancy button
-        findViewById(R.id.buttonIntro).setOnClickListener(v -> {
+        findViewById(R.id.imagebuttonIntro).setOnClickListener(v -> {
             Intent intent = new Intent(IntroActivity.this, LoginActivity.class);
             startActivity(intent);
         });

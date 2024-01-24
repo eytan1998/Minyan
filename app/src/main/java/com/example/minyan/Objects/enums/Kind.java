@@ -1,22 +1,23 @@
 package com.example.minyan.Objects.enums;
 
 public enum Kind {
-    ALL(1) {
+
+    SHAHRIT(1) {
         @Override
         public String toString() {
-            return "all";
+            return "שחרית";
         }
     },
-    Ashkenaz(2) {
+    MINHA(2) {
         @Override
         public String toString() {
-            return "Ashkenaz";
+            return "מנחה";
         }
     },
-    Sparad(3) {
+    MARIV(3) {
         @Override
         public String toString() {
-            return "Sparad";
+            return "ערבית";
         }
     };
     private int kind;
@@ -47,7 +48,7 @@ public enum Kind {
      * @return whether the kind is valid or not
      */
     private static boolean validatePriority(int kind) {
-        if (kind < 1 || kind > 10) return false;
+        if (kind <= 1 || kind > 10) return false;
         return true;
     }
 

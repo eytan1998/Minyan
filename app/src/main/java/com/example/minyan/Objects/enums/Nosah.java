@@ -2,22 +2,22 @@ package com.example.minyan.Objects.enums;
 
 public enum Nosah {
 
-    SHAHRIT(1) {
+    ALL(1) {
         @Override
         public String toString() {
-            return "שחרית";
+            return "all";
         }
     },
-    MINHA(2) {
+    Ashkenaz(2) {
         @Override
         public String toString() {
-            return "מנחה";
+            return "Ashkenaz";
         }
     },
-    MARIV(3) {
+    Sparad(3) {
         @Override
         public String toString() {
-            return "ערבית";
+            return "Sparad";
         }
     };
     private int nosah;
@@ -47,7 +47,7 @@ public enum Nosah {
      * @return whether the nosah is valid or not
      */
     private static boolean validatePriority(int nosah) {
-        if (nosah < 1 || nosah > 10) return false;
+        if (nosah <= 1 || nosah > 10) return false;
         return true;
     }
 

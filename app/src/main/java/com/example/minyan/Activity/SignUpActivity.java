@@ -86,7 +86,7 @@ public class SignUpActivity extends AppCompatActivity {
                                             editTextSignUpPhone.getText().toString()
                                     );
 
-                                    db.collection(Gabai.GABAI).document(mAuth.getUid()).set(gabai);
+                                    db.collection(Gabai.GABAI).document(Gabai.GABAI + "|" + Objects.requireNonNull(mAuth.getCurrentUser()).getEmail()).set(gabai);
 
 
                                 }
@@ -94,8 +94,8 @@ public class SignUpActivity extends AppCompatActivity {
                                 Prayer prayer = new Prayer(
                                         editTextSignUpName.getText().toString()
                                         , editTextSignInEmail.getText().toString()
-                                        );
-                                db.collection(Prayer.PRAYER).document(mAuth.getUid()).set(prayer);
+                                );
+                                db.collection(Prayer.PRAYER).document(Prayer.PRAYER + "|" + Objects.requireNonNull(mAuth.getCurrentUser()).getEmail()).set(prayer);
 
                             }
                             //send verification

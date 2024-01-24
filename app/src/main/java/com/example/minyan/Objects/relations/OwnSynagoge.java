@@ -1,11 +1,18 @@
 package com.example.minyan.Objects.relations;
 
-public class ownSynagoge {
+public class OwnSynagoge {
+    public static String OWN_SYNAGOGE = "OWN_SYNAGOGE";
+
     String s_id;
     String gabai_email;
 
-    public ownSynagoge() {
+    public OwnSynagoge() {
 
+    }
+
+    public OwnSynagoge(String s_id, String gabai_email) {
+        this.s_id = s_id;
+        this.gabai_email = gabai_email;
     }
 
     public String getS_id() {

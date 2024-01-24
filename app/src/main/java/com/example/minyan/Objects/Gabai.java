@@ -2,6 +2,12 @@ package com.example.minyan.Objects;
 
 import android.media.Image;
 
+import com.example.minyan.Objects.relations.OwnSynagoge;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Objects;
+
 public class Gabai {
         public static String GABAI = "GABAI";
         String email;
@@ -21,6 +27,14 @@ public class Gabai {
                 this.email = email;
                 this.phone = phone;
                 this.isVerified = false; //cant acsses gabai rigth without admin verify
+
+        }
+
+        public void addSynagoge(Synagoge synagoge){
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection(Synagoge.SYNAGOGE).document(synagoge.getS_id()).set(synagoge);
+                OwnSynagoge ownSynagoge = new OwnSynagoge(synagoge.getS_id(),this.email);
+                db.collection(OwnSynagoge.OWN_SYNAGOGE).add(ownSynagoge);
 
         }
 

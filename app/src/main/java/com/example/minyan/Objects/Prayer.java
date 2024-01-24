@@ -7,10 +7,7 @@ public class Prayer  {
     String name;
     String email;
     String quote;
-
     Image image;
-    //TODO Conversation
-
 
     public Prayer(String name, String email) {
         this.name = name;

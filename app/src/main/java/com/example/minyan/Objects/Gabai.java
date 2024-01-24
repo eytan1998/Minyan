@@ -4,15 +4,15 @@ import android.media.Image;
 
 public class Gabai {
         public static String GABAI = "GABAI";
-        String name;
         String email;
+        String name;
 
         String phone;
 
         boolean isVerified;
         Image image;
         String quote;
-        //TODO Conversatio
+
         public Gabai() {
         }
 

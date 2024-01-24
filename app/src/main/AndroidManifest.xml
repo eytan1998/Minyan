@@ -20,10 +20,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBDONU9ZNmfcbHpnqKBPnLNY9UKG6m__Es" />
-
-        <activity
-            android:name=".Activity.AskGabaiActivity"
-            android:exported="false" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
         <activity
             android:name=".Activity.SignUpActivity"
             android:exported="false" />

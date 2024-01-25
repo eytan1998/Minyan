@@ -6,4 +6,54 @@
     android:layout_height="match_parent"
     tools:context=".Activity.ProfileGabiActivity">
 
+    <TextView
+        android:id="@+id/textViewProfileGabaiName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="שם"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewProfileGabiProfile"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewProfileGabiProfile"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.86" />
+
+    <ImageView
+        android:id="@+id/imageViewProfileGabiProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/buttonProfileGabiManageSynagoe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="@+id/textViewProfileGabaiQoute"
+        app:layout_constraintTop_toBottomOf="@+id/textViewProfileGabaiQoute" />
+
+    <TextView
+        android:id="@+id/textViewProfileGabaiQoute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:text="ציטוט"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewProfileGabiProfile"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewProfileGabiProfile" />
+
+    <Button
+        android:id="@+id/buttonProfileGabiMassages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="@+id/buttonProfileGabiManageSynagoe"
+        app:layout_constraintTop_toBottomOf="@+id/buttonProfileGabiManageSynagoe" />
 </androidx.constraintlayout.widget.ConstraintLayout>

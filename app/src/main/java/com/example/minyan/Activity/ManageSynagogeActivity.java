@@ -1,5 +1,6 @@
 package com.example.minyan.Activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -99,6 +100,18 @@ public class ManageSynagogeActivity extends AppCompatActivity implements OnMapRe
                     addMarkerEditText.setText("");
                     currentSynagoge = null;
                     currentMarker = null;
+                }
+            }
+        });
+        buttonEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mMap != null) {
+                    if (currentSynagoge != null) {
+                        Intent intent = new Intent(ManageSynagogeActivity.this, EditSynagogeActivity.class);
+                        intent.putExtra(Synagoge.SYNAGOGE, currentSynagoge.getS_id());
+                        startActivity(intent);
+                    }
                 }
             }
         });

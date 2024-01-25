@@ -1,8 +1,10 @@
-package com.example.minyan;
+package com.example.minyan.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.minyan.R;
 
 public class ProfilePrayerActivity extends AppCompatActivity {
 

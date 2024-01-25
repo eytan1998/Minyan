@@ -20,19 +20,19 @@
 signup -> login -> profile -> manage synagoge -> fav/report/like synagoge -> find synagoge -> massages
 
 ### activitys 
-IntroActivity 2
-SignUpActivity 2
-LoginActivity 2
+IntroActivity 2 done
+SignUpActivity 2 done
+LoginActivity 2 done
 
-ViewSynagogeActivity -> report\like\fav (recycleView prayers) 1
-EditSynagogeActivity -> change name\lovation?\nosah/prayers 1
+ViewSynagogeActivity -> report\like\fav\sendToGabai (recycleView prayies) 1 eitan
+EditSynagogeActivity -> change name\lovation?\nosah/prayers 1 eitan
 
 ProfileGabiActivity 1
 -> ManageSynagogeActivity 1
--> MassagesActivity 1
+-> MassagesActivity 1 oz
 
-ProfilePrayerActivity 1
--> findSynagogeActivity 1
--> FavoriteActivity 1
--> MassagesActivity (dup) 1 
+ProfilePrayerActivity 1 amit
+-> findSynagogeActivity 1 amit
+-> FavoriteActivity remove\viewSynagoge (rcycleView) 1 - amit 
+-> MassagesActivity (dup) 1  oz
 

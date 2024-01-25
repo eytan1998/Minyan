@@ -24,13 +24,13 @@
             android:name=".Activity.findSynagogeActivity"
             android:exported="false" />
         <activity
-            android:name=".ProfilePrayerActivity"
+            android:name=".Activity.ProfilePrayerActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.ProfileGabiActivity"
             android:exported="false" />
         <activity
-            android:name=".EditSynagogeActivity"
+            android:name=".Activity.EditSynagogeActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.ViewSynagogeActivity"

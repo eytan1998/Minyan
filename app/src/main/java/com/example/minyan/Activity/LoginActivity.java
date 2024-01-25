@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
                                         DocumentSnapshot document = task.getResult();
                                         if (document.exists()) {
                                             if (document.toObject(Gabai.class).isVerified()) {
-                                                Intent intent = new Intent(LoginActivity.this, GabaiMainActivity.class);
+                                                Intent intent = new Intent(LoginActivity.this, ManageSynagogeActivity.class);
                                                 startActivity(intent);
                                             }else{
                                                 Toast.makeText(this, "צריך לחכות לאימות טלפוני", Toast.LENGTH_LONG).show();

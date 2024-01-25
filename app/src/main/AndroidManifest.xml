@@ -18,6 +18,21 @@
         android:theme="@style/Theme.Minyan"
         tools:targetApi="31">
         <activity
+            android:name=".Activity.FavoriteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.findSynagogeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfilePrayerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.ProfileGabiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditSynagogeActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.ViewSynagogeActivity"
             android:exported="false" />
 
@@ -33,7 +48,7 @@
             android:exported="false" />
         <activity
             android:name=".Activity.LoginActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".Activity.IntroActivity"
             android:exported="true">
@@ -47,8 +62,8 @@
             android:name=".Activity.PrayerMainActivity"
             android:exported="true" />
         <activity
-            android:name=".Activity.GabaiMainActivity"
-            android:exported="true"></activity>
+            android:name=".Activity.ManageSynagogeActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

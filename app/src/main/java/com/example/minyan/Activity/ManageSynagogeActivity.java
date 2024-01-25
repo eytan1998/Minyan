@@ -3,7 +3,6 @@ package com.example.minyan.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -29,23 +28,17 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
-import java.util.Stack;
 
 
-public class GabaiMainActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class ManageSynagogeActivity extends AppCompatActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     LatLng centerOfMap;
     Gabai gabai;
@@ -126,7 +119,6 @@ public class GabaiMainActivity extends AppCompatActivity implements OnMapReadyCa
 
         mMap.setOnMarkerClickListener(marker -> {
             String s_id = marker.getSnippet();
-            Log.e("TAG", "onMapReady: " + s_id + "---" + marker.toString());
             db.collection(Synagoge.SYNAGOGE).document(s_id).get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     currentMarker = marker;
@@ -144,7 +136,7 @@ public class GabaiMainActivity extends AppCompatActivity implements OnMapReadyCa
                 @Nullable
                 @Override
                 public View getInfoWindow(@NonNull Marker marker) {
-                    View view = LayoutInflater.from(GabaiMainActivity.this).inflate(R.layout.custom_info_window, null);
+                    View view = LayoutInflater.from(ManageSynagogeActivity.this).inflate(R.layout.custom_info_window, null);
                     //TODO if want make custom info layout
 //                    TextView titleTextView = view.findViewById(R.id.titleTextView);
 //                    titleTextView.setText(marker.getTitle());
@@ -175,6 +167,7 @@ public class GabaiMainActivity extends AppCompatActivity implements OnMapReadyCa
                                         if (querySnapshot1 != null) {
                                             for (QueryDocumentSnapshot document : querySnapshot1) {
                                                 Synagoge s = document.toObject(Synagoge.class);
+
                                                 MarkerOptions markerOptions = new MarkerOptions()
                                                         .position(new LatLng(s.getLat(), s.getLng()))
                                                         .title(s.getName())

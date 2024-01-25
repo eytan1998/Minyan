@@ -9,33 +9,25 @@ import java.util.UUID;
 public class Synagoge {
     public static String SYNAGOGE = "SYNAGOGE";
 
-    String s_id;
-    String name;
-    int nosah;
-    Address address;
-    double lat;
-    double lng;
-    String pdf_id;
-    String more_detail;
+    private String s_id;
+    private String name;
+    private Nosah nosah;
+    private Address address;
+    private double lat;
+    private double lng;
+    private String pdf_id;
+    private String more_detail;
+
 
     public Synagoge() {
     }
 
-    public Synagoge( String name, int nosah, Address address, double lat, double lng) {
+    public Synagoge(String name, Nosah nosah, double latitude, double longitude) {
         this.s_id = String.valueOf(UUID.randomUUID());
         this.name = name;
         this.nosah = nosah;
-        this.address = address;
-        this.lat = lat;
-        this.lng = lng;
-    }
-
-    public static String getSYNAGOGE() {
-        return SYNAGOGE;
-    }
-
-    public static void setSYNAGOGE(String SYNAGOGE) {
-        Synagoge.SYNAGOGE = SYNAGOGE;
+        this.lat = latitude;
+        this.lng = longitude;
     }
 
     public String getS_id() {
@@ -54,11 +46,11 @@ public class Synagoge {
         this.name = name;
     }
 
-    public int getNosah() {
+    public Nosah getNosah() {
         return nosah;
     }
 
-    public void setNosah(int nosah) {
+    public void setNosah(Nosah nosah) {
         this.nosah = nosah;
     }
 

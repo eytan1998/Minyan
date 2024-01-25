@@ -11,19 +11,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
-        android:text="Button"
+        android:text="שמור בית כנסת"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/addMarkerEditText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
         android:ems="10"
+        android:hint="שם בית כנסת"
         android:inputType="text"
-        android:text="Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/map" />
@@ -32,12 +34,28 @@
         android:id="@+id/map"
         class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="450dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/buttonEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ערוך בית כנסת"
+        app:layout_constraintBottom_toTopOf="@+id/addMarkerButton"
+        app:layout_constraintEnd_toEndOf="@+id/addMarkerButton"
+        app:layout_constraintStart_toStartOf="@+id/addMarkerButton" />
 
+    <Button
+        android:id="@+id/buttonDEl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="מחק בית כנסת"
+        app:layout_constraintBottom_toTopOf="@+id/buttonEdit"
+        app:layout_constraintEnd_toEndOf="@+id/buttonEdit"
+        app:layout_constraintStart_toStartOf="@+id/buttonEdit" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

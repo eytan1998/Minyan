@@ -1,8 +1,13 @@
 package com.example.minyan.Objects;
 
 import android.location.Address;
+import android.widget.Toast;
 
 import com.example.minyan.Objects.enums.Nosah;
+import com.example.minyan.Objects.relations.OwnSynagoge;
+import com.example.minyan.Objects.relations.PrayInSynagoge;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.UUID;
 
@@ -30,6 +35,33 @@ public class Synagoge {
         this.lng = longitude;
     }
 
+    public String addPray(Pray pray){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(Pray.PRAY).document(pray.getPray_id()).set(pray);
+        PrayInSynagoge prayInSynagoge = new PrayInSynagoge(pray.getPray_id(), this.s_id);
+        db.collection(PrayInSynagoge.PRAY_IN_SYNAGOGE).add(prayInSynagoge);
+        return pray.getPray_id();
+    }
+    public void updatePray(Pray pray){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(Pray.PRAY).document(pray.getPray_id()).set(pray);
+    }
+    public void delPray(Pray pray){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(Pray.PRAY).document(pray.getPray_id()).delete();
+        db.collection(PrayInSynagoge.PRAY_IN_SYNAGOGE).whereEqualTo("pray_id", pray.getPray_id())
+                .get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            // Get the document ID and delete the document
+                            String documentId = document.getId();
+                            db.collection(PrayInSynagoge.PRAY_IN_SYNAGOGE)
+                                    .document(documentId)
+                                    .delete();
+                        }
+                    }
+                });
+    }
     public String getS_id() {
         return s_id;
     }

@@ -1,5 +1,6 @@
 package com.example.minyan.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,9 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.minyan.Objects.Synagoge;
 import com.example.minyan.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -47,23 +51,23 @@ public class EditSynagogeActivity extends AppCompatActivity {
                 currentSynagoge = task.getResult().toObject(Synagoge.class);
                 EditTextEditSynagogeName.setText(currentSynagoge.getName());
                 //todo spinnerEditSynagogeNosah
-                EditTextEditSynagogeAdress.setText(currentSynagoge.getAddress().toString());
+//            todo    EditTextEditSynagogeAdress.setText(currentSynagoge.getAddress().toString());
                 //todo recyclerView
                 //todo image
             }
         });
 
-        buttonEditSynagogeSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(currentSynagoge!=null){
-                    currentSynagoge.setName(EditTextEditSynagogeName.getText().toString());
-                    //todo urrentSynagoge.setAddress(EditTextEditSynagogeAdress.getText().toString());
-                    //todo setNosah not here
-                    //todo set pray not here
-                    //todo setimage not here
+        buttonEditSynagogeSave.setOnClickListener(v -> {
+            if(currentSynagoge!=null){
+                currentSynagoge.setName(EditTextEditSynagogeName.getText().toString());
+                docRef.set(currentSynagoge).addOnCompleteListener(task -> {
+                    Toast.makeText(this,"Saved",Toast.LENGTH_LONG).show();
+                });
+                //todo urrentSynagoge.setAddress(EditTextEditSynagogeAdress.getText().toString());
+                //todo setNosah not here
+                //todo set pray not here
+                //todo setimage not here
 
-                }
             }
         });
 

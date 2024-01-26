@@ -35,6 +35,9 @@
         <activity
             android:name=".Activity.ViewSynagogeActivity"
             android:exported="false" />
+        <activity
+            android:name=".Activity.MassagesActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -58,9 +61,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Activity.PrayerMainActivity"
-            android:exported="true" />
         <activity
             android:name=".Activity.ManageSynagogeActivity"
             android:exported="true" />

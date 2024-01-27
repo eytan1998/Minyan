@@ -1,14 +1,18 @@
 package com.example.minyan.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,7 +39,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 
@@ -79,7 +86,7 @@ public class ManageSynagogeActivity extends AppCompatActivity implements OnMapRe
         addMarkerButton.setOnClickListener(v -> {
             if (mMap != null) {
 
-                Synagoge synagoge = new Synagoge(addMarkerEditText.getText().toString(), Nosah.ALL, centerOfMap.latitude, centerOfMap.longitude);
+                Synagoge synagoge = new Synagoge(addMarkerEditText.getText().toString(), Nosah.ALL, centerOfMap.latitude, centerOfMap.longitude, getAddressFromLocation(ManageSynagogeActivity.this,centerOfMap.latitude,centerOfMap.longitude));
                 String s_id = gabai.addSynagoge(synagoge);
 
                 MarkerOptions markerOptions = new MarkerOptions()
@@ -89,6 +96,8 @@ public class ManageSynagogeActivity extends AppCompatActivity implements OnMapRe
                         .icon(getCustomMarkerIcon(R.drawable.ic_marker));
                 mMap.addMarker(markerOptions);
                 currentSynagoge = synagoge;
+
+
             }
         });
         buttonDEl.setOnClickListener(v -> {
@@ -204,6 +213,26 @@ public class ManageSynagogeActivity extends AppCompatActivity implements OnMapRe
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resourceId);
         Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, 55, 80, false);
         return BitmapDescriptorFactory.fromBitmap(scaledBitmap);
+    }
+    private String getAddressFromLocation(Context context, double latitude, double longitude) {
+        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+
+        try {
+            List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+
+            if (addresses != null && addresses.size() > 0) {
+                Address address = addresses.get(0);
+                String fullAddress = address.getAddressLine(0); // You can get other address details as needed
+
+                return fullAddress;
+                // Use the obtained address
+            } else {
+                return "";
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 

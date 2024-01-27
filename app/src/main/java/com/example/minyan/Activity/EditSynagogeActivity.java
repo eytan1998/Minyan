@@ -4,12 +4,14 @@ import static com.google.android.material.internal.ContextUtils.getActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.minyan.Objects.Pray;
@@ -35,6 +38,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class EditSynagogeActivity extends AppCompatActivity {
@@ -43,7 +47,7 @@ public class EditSynagogeActivity extends AppCompatActivity {
     Pray currentPray = null;
     RecyclerView recyclerView;
     RecyclerAdapterPray recyclerAdapter;
-    private List<Pray> prays = new ArrayList<>();
+    private final List<Pray> prays = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +71,6 @@ public class EditSynagogeActivity extends AppCompatActivity {
         spinnerEditSynagogeNosah.setAdapter(adapter);
 
 
-
         String s_id = getIntent().getStringExtra(Synagoge.SYNAGOGE);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -79,7 +82,6 @@ public class EditSynagogeActivity extends AppCompatActivity {
                 EditTextEditSynagogeName.setText(currentSynagoge.getName());
                 spinnerEditSynagogeNosah.setSelection(currentSynagoge.getNosah().getIntValue());
 //            todo    EditTextEditSynagogeAdress.setText(currentSynagoge.getAddress().toString());
-                //todo recyclerView
                 //get all prays_id
                 db.collection(PrayInSynagoge.PRAY_IN_SYNAGOGE).whereEqualTo("s_id", currentSynagoge.getS_id())
                         .get().addOnCompleteListener(getS_idTask -> {
@@ -161,22 +163,23 @@ public class EditSynagogeActivity extends AppCompatActivity {
             setContentView(R.layout.dialog_edit_pray);
 
             Button buttonEditPraySave = findViewById(R.id.buttonEditPraySave);
-            Button buttonEditPrayDelete = findViewById(R.id.buttonEditPrayDelete);
             Button buttonEditPrayExit = findViewById(R.id.buttonEditPrayExit);
 
             Spinner spinnerEditPrayChooseKind = findViewById(R.id.spinnerEditPrayChooseKind);
             EditText editTextEditPrayName = findViewById(R.id.editTextEditPrayName);
-            EditText editTextEditPrayTime = findViewById(R.id.editTextEditPrayTime);
+            Button buttonEditPrayTime = findViewById(R.id.buttonEditPrayTime);
             EditText editTextEditPrayMoreInfo = findViewById(R.id.editTextEditPrayMoreInfo);
 
             ArrayAdapter<Kind> adapter = new ArrayAdapter<>(EditSynagogeActivity.this, android.R.layout.simple_spinner_item, Kind.values());
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerEditPrayChooseKind.setAdapter(adapter);
 
+
             if (currentPray != null) {
                 editTextEditPrayName.setText(currentPray.getName());
                 editTextEditPrayMoreInfo.setText(currentPray.getMoreDetail());
                 spinnerEditPrayChooseKind.setSelection(currentPray.getKind().getIntValue());
+                buttonEditPrayTime.setText(currentPray.getTime());
             }
 
 
@@ -187,6 +190,7 @@ public class EditSynagogeActivity extends AppCompatActivity {
                     currentPray.setName(editTextEditPrayName.getText().toString());
                     currentPray.setMoreDetail(editTextEditPrayMoreInfo.getText().toString());
                     currentPray.setKind(((Kind) spinnerEditPrayChooseKind.getSelectedItem()));
+                    currentPray.setTime(buttonEditPrayTime.getText().toString());
 
                     prays.add(currentPray);
                     currentSynagoge.updatePray(currentPray);
@@ -194,7 +198,11 @@ public class EditSynagogeActivity extends AppCompatActivity {
                     recyclerAdapter.notifyDataSetChanged();
 
                 } else {
-                    Pray p = new Pray(editTextEditPrayName.getText().toString(), editTextEditPrayMoreInfo.getText().toString(),((Kind) spinnerEditPrayChooseKind.getSelectedItem()));
+                    Pray p = new Pray(editTextEditPrayName.getText().toString()
+                            , editTextEditPrayMoreInfo.getText().toString()
+                            , ((Kind) spinnerEditPrayChooseKind.getSelectedItem())
+                            , buttonEditPrayTime.getText().toString());
+
                     currentSynagoge.addPray(p);
                     prays.add(p);
                     recyclerAdapter.notifyItemInserted(recyclerAdapter.getItemCount());
@@ -208,12 +216,16 @@ public class EditSynagogeActivity extends AppCompatActivity {
 
 
             });
-            buttonEditPrayDelete.setOnClickListener(v -> {
+            buttonEditPrayTime.setOnClickListener(v -> {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(EditSynagogeActivity.this, (view, hourOfDay, minute) -> buttonEditPrayTime.setText(String.format("%02d:%02d", hourOfDay, minute)),
+                       Integer.parseInt(buttonEditPrayTime.getText().toString().split(":")[0]),
+                       Integer.parseInt(buttonEditPrayTime.getText().toString().split(":")[1]),
 
-                Toast.makeText(getContext(), "תפילה נמחקה", Toast.LENGTH_SHORT).show();
-                dismiss();
+                        true);
+                timePickerDialog.show();
 
             });
+
             buttonEditPrayExit.setOnClickListener(v -> dismiss());
 
         }

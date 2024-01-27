@@ -14,6 +14,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,6 +25,8 @@ import android.widget.Toast;
 
 import com.example.minyan.Objects.Pray;
 import com.example.minyan.Objects.Synagoge;
+import com.example.minyan.Objects.enums.Kind;
+import com.example.minyan.Objects.enums.Nosah;
 import com.example.minyan.Objects.relations.PrayInSynagoge;
 import com.example.minyan.R;
 import com.google.firebase.firestore.DocumentReference;
@@ -58,18 +62,22 @@ public class EditSynagogeActivity extends AppCompatActivity {
 
         Button buttonEditSynagogeSave = findViewById(R.id.buttonEditSynagogeSave);
 
+        ArrayAdapter<Nosah> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Nosah.values());
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerEditSynagogeNosah.setAdapter(adapter);
+
+
+
         String s_id = getIntent().getStringExtra(Synagoge.SYNAGOGE);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-
         DocumentReference docRef = db.collection(Synagoge.SYNAGOGE).document(s_id);
 
         docRef.get().addOnCompleteListener(getSynagogeTask -> {
             if (getSynagogeTask.isSuccessful()) {
                 currentSynagoge = getSynagogeTask.getResult().toObject(Synagoge.class);
                 EditTextEditSynagogeName.setText(currentSynagoge.getName());
-                //todo spinnerEditSynagogeNosah
+                spinnerEditSynagogeNosah.setSelection(currentSynagoge.getNosah().getIntValue());
 //            todo    EditTextEditSynagogeAdress.setText(currentSynagoge.getAddress().toString());
                 //todo recyclerView
                 //get all prays_id
@@ -93,8 +101,6 @@ public class EditSynagogeActivity extends AppCompatActivity {
                                                         prays.add(document.toObject(Pray.class));
 
                                                     }
-
-
                                                     recyclerAdapter = new RecyclerAdapterPray(prays);
                                                     recyclerView.setAdapter(recyclerAdapter);
                                                     DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(EditSynagogeActivity.this, DividerItemDecoration.VERTICAL);
@@ -120,12 +126,11 @@ public class EditSynagogeActivity extends AppCompatActivity {
         buttonEditSynagogeSave.setOnClickListener(v -> {
             if (currentSynagoge != null) {
                 currentSynagoge.setName(EditTextEditSynagogeName.getText().toString());
+                currentSynagoge.setNosah(((Nosah) spinnerEditSynagogeNosah.getSelectedItem()));
                 docRef.set(currentSynagoge).addOnCompleteListener(task -> {
                     Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show();
                 });
                 //todo urrentSynagoge.setAddress(EditTextEditSynagogeAdress.getText().toString());
-                //todo setNosah not here
-                //todo set pray not here
                 //todo setimage not here
 
             }
@@ -164,9 +169,14 @@ public class EditSynagogeActivity extends AppCompatActivity {
             EditText editTextEditPrayTime = findViewById(R.id.editTextEditPrayTime);
             EditText editTextEditPrayMoreInfo = findViewById(R.id.editTextEditPrayMoreInfo);
 
+            ArrayAdapter<Kind> adapter = new ArrayAdapter<>(EditSynagogeActivity.this, android.R.layout.simple_spinner_item, Kind.values());
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerEditPrayChooseKind.setAdapter(adapter);
+
             if (currentPray != null) {
                 editTextEditPrayName.setText(currentPray.getName());
                 editTextEditPrayMoreInfo.setText(currentPray.getMoreDetail());
+                spinnerEditPrayChooseKind.setSelection(currentPray.getKind().getIntValue());
             }
 
 
@@ -176,6 +186,7 @@ public class EditSynagogeActivity extends AppCompatActivity {
 
                     currentPray.setName(editTextEditPrayName.getText().toString());
                     currentPray.setMoreDetail(editTextEditPrayMoreInfo.getText().toString());
+                    currentPray.setKind(((Kind) spinnerEditPrayChooseKind.getSelectedItem()));
 
                     prays.add(currentPray);
                     currentSynagoge.updatePray(currentPray);
@@ -183,7 +194,7 @@ public class EditSynagogeActivity extends AppCompatActivity {
                     recyclerAdapter.notifyDataSetChanged();
 
                 } else {
-                    Pray p = new Pray(editTextEditPrayName.getText().toString(), editTextEditPrayMoreInfo.getText().toString());
+                    Pray p = new Pray(editTextEditPrayName.getText().toString(), editTextEditPrayMoreInfo.getText().toString(),((Kind) spinnerEditPrayChooseKind.getSelectedItem()));
                     currentSynagoge.addPray(p);
                     prays.add(p);
                     recyclerAdapter.notifyItemInserted(recyclerAdapter.getItemCount());

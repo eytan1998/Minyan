@@ -17,10 +17,11 @@ public class Pray {
     public Pray() {
     }
 
-    public Pray(String name, String moreDetail) {
+    public Pray(String name, String moreDetail,Kind kind) {
         this.pray_id = String.valueOf(UUID.randomUUID());
         this.name = name;
         this.moreDetail = moreDetail;
+        this.kind = kind;
     }
 
     public String getPray_id() {

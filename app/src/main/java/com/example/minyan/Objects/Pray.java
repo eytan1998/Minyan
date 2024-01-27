@@ -11,16 +11,18 @@ public class Pray {
 
     String name;
     Kind kind;
-    Date time;
+    String time;
     String moreDetail;
 
     public Pray() {
     }
 
-    public Pray(String name, String moreDetail) {
+    public Pray(String name, String moreDetail, Kind kind, String time) {
         this.pray_id = String.valueOf(UUID.randomUUID());
         this.name = name;
         this.moreDetail = moreDetail;
+        this.kind = kind;
+        this.time = time;
     }
 
     public String getPray_id() {
@@ -47,11 +49,11 @@ public class Pray {
         this.kind = kind;
     }
 
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(String time) {
         this.time = time;
     }
 

@@ -49,14 +49,6 @@
         app:layout_constraintStart_toStartOf="@+id/view6">
 
         <Button
-            android:id="@+id/buttonEditPrayDelete"
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="מחיקה" />
-
-        <Button
             android:id="@+id/buttonEditPraySave"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
@@ -79,14 +71,13 @@
         app:layout_constraintStart_toStartOf="@+id/spinnerEditPrayChooseKind"
         app:layout_constraintTop_toBottomOf="@+id/spinnerEditPrayChooseKind" />
 
-    <EditText
-        android:id="@+id/editTextEditPrayTime"
+    <Button
+        android:id="@+id/buttonEditPrayTime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="זמן"
-        android:inputType="time"
+        android:text="00:00"
         app:layout_constraintEnd_toEndOf="@+id/editTextEditPrayName"
         app:layout_constraintStart_toStartOf="@+id/editTextEditPrayName"
         app:layout_constraintTop_toBottomOf="@+id/editTextEditPrayName" />
@@ -112,8 +103,8 @@
         android:hint="עוד פרטים"
         android:inputType="textMultiLine"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
-        app:layout_constraintEnd_toEndOf="@+id/editTextEditPrayTime"
-        app:layout_constraintStart_toStartOf="@+id/editTextEditPrayTime"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEditPrayTime" />
+        app:layout_constraintEnd_toEndOf="@+id/buttonEditPrayTime"
+        app:layout_constraintStart_toStartOf="@+id/buttonEditPrayTime"
+        app:layout_constraintTop_toBottomOf="@+id/buttonEditPrayTime" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

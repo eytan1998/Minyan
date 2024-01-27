@@ -9,10 +9,10 @@ public class Pray {
     public static String PRAY = "PRAY";
     private String pray_id;
 
-    String name;
-    Kind kind;
-    String time;
-    String moreDetail;
+    private String name;
+    private Kind kind;
+    private String time;
+    private String moreDetail;
 
     public Pray() {
     }

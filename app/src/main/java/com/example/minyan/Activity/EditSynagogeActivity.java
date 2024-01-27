@@ -49,6 +49,7 @@ public class EditSynagogeActivity extends AppCompatActivity {
         EditText EditTextEditSynagogeName = findViewById(R.id.EditTextEditSynagogeName);
         Spinner spinnerEditSynagogeNosah = findViewById(R.id.spinnerEditSynagogeNosah);
         TextView TextViewEditSynagogeAdress = findViewById(R.id.TextViewEditSynagogeAdress);
+        EditText editTexttEditSynagogeMoreInfo = findViewById(R.id.editTexttEditSynagogeMoreInfo);
 
         Button buttonEditSynagogeAddParay = findViewById(R.id.buttonEditSynagogeAddParay);
         recyclerView = findViewById(R.id.recyclerViewEditSynagoge);
@@ -74,6 +75,8 @@ public class EditSynagogeActivity extends AppCompatActivity {
                 EditTextEditSynagogeName.setText(currentSynagoge.getName());
                 spinnerEditSynagogeNosah.setSelection(currentSynagoge.getNosah().getIntValue());
                 TextViewEditSynagogeAdress.setText(currentSynagoge.getAddress());
+                editTexttEditSynagogeMoreInfo.setText(currentSynagoge.getMore_detail());
+
                 //get all prays_id
                 db.collection(PrayInSynagoge.PRAY_IN_SYNAGOGE).whereEqualTo("s_id", currentSynagoge.getS_id())
                         .get().addOnCompleteListener(getS_idTask -> {
@@ -122,6 +125,7 @@ public class EditSynagogeActivity extends AppCompatActivity {
                 currentSynagoge.setName(EditTextEditSynagogeName.getText().toString());
                 currentSynagoge.setNosah(((Nosah) spinnerEditSynagogeNosah.getSelectedItem()));
                 currentSynagoge.setAddress(TextViewEditSynagogeAdress.getText().toString());
+                currentSynagoge.setMore_detail(editTexttEditSynagogeMoreInfo.getText().toString());
 
                 docRef.set(currentSynagoge).addOnCompleteListener(task -> {
                     Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show();

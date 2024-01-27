@@ -1,6 +1,8 @@
 package com.example.minyan.Objects;
 
+import android.content.Context;
 import android.location.Address;
+import android.location.Geocoder;
 import android.widget.Toast;
 
 import com.example.minyan.Objects.enums.Nosah;
@@ -9,6 +11,9 @@ import com.example.minyan.Objects.relations.PrayInSynagoge;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 public class Synagoge {
@@ -17,7 +22,7 @@ public class Synagoge {
     private String s_id;
     private String name;
     private Nosah nosah;
-    private Address address;
+    private String  address;
     private double lat;
     private double lng;
     private String pdf_id;
@@ -27,12 +32,13 @@ public class Synagoge {
     public Synagoge() {
     }
 
-    public Synagoge(String name, Nosah nosah, double latitude, double longitude) {
+    public Synagoge(String name, Nosah nosah, double latitude, double longitude,String address) {
         this.s_id = String.valueOf(UUID.randomUUID());
         this.name = name;
         this.nosah = nosah;
         this.lat = latitude;
         this.lng = longitude;
+        this.address = address;
     }
 
     public String addPray(Pray pray){
@@ -86,11 +92,11 @@ public class Synagoge {
         this.nosah = nosah;
     }
 
-    public Address getAddress() {
+    public String getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 
@@ -125,5 +131,7 @@ public class Synagoge {
     public void setMore_detail(String more_detail) {
         this.more_detail = more_detail;
     }
+
+
 }
 

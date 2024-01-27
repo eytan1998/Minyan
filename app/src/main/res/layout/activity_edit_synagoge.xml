@@ -17,6 +17,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/TextViewEditSynagogeAdress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="כתובת"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/EditTextEditSynagogeName"
+        app:layout_constraintTop_toBottomOf="@+id/EditTextEditSynagogeName" />
+
     <ScrollView
         android:layout_width="415dp"
         android:layout_height="0dp"
@@ -24,9 +36,9 @@
         android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toTopOf="@+id/buttonEditSynagogeSave"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditTextEditSynagogeName">
+        app:layout_constraintTop_toBottomOf="@+id/TextViewEditSynagogeAdress"
+        app:layout_constraintVertical_bias="1.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -49,14 +61,14 @@
                 android:id="@+id/textView11"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:background="#CFCFCF"
                 android:gravity="center"
                 android:padding="4dp"
                 android:text="תפילות"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/EditTextEditSynagogeAdress" />
+                app:layout_constraintTop_toBottomOf="@+id/spinnerEditSynagogeNosah" />
 
             <Spinner
                 android:id="@+id/spinnerEditSynagogeNosah"
@@ -67,15 +79,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
-                android:id="@+id/EditTextEditSynagogeAdress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="כתובת"
-                app:layout_constraintStart_toStartOf="@+id/spinnerEditSynagogeNosah"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerEditSynagogeNosah" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewEditSynagoge"
                 android:layout_width="320dp"
@@ -83,7 +86,7 @@
                 android:layout_marginTop="8dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 
-                app:layout_constraintStart_toStartOf="@+id/EditTextEditSynagogeAdress"
+                app:layout_constraintStart_toStartOf="@+id/spinnerEditSynagogeNosah"
                 app:layout_constraintTop_toBottomOf="@+id/textView11">
 
             </androidx.recyclerview.widget.RecyclerView>

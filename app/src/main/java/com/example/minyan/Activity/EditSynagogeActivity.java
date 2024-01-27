@@ -1,29 +1,22 @@
 package com.example.minyan.Activity;
 
-import static com.google.android.material.internal.ContextUtils.getActivity;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.minyan.Objects.Pray;
@@ -38,7 +31,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class EditSynagogeActivity extends AppCompatActivity {
@@ -56,7 +48,7 @@ public class EditSynagogeActivity extends AppCompatActivity {
 
         EditText EditTextEditSynagogeName = findViewById(R.id.EditTextEditSynagogeName);
         Spinner spinnerEditSynagogeNosah = findViewById(R.id.spinnerEditSynagogeNosah);
-        EditText EditTextEditSynagogeAdress = findViewById(R.id.EditTextEditSynagogeAdress);
+        TextView TextViewEditSynagogeAdress = findViewById(R.id.TextViewEditSynagogeAdress);
 
         Button buttonEditSynagogeAddParay = findViewById(R.id.buttonEditSynagogeAddParay);
         recyclerView = findViewById(R.id.recyclerViewEditSynagoge);
@@ -81,7 +73,7 @@ public class EditSynagogeActivity extends AppCompatActivity {
                 currentSynagoge = getSynagogeTask.getResult().toObject(Synagoge.class);
                 EditTextEditSynagogeName.setText(currentSynagoge.getName());
                 spinnerEditSynagogeNosah.setSelection(currentSynagoge.getNosah().getIntValue());
-//            todo    EditTextEditSynagogeAdress.setText(currentSynagoge.getAddress().toString());
+                TextViewEditSynagogeAdress.setText(currentSynagoge.getAddress());
                 //get all prays_id
                 db.collection(PrayInSynagoge.PRAY_IN_SYNAGOGE).whereEqualTo("s_id", currentSynagoge.getS_id())
                         .get().addOnCompleteListener(getS_idTask -> {
@@ -129,10 +121,11 @@ public class EditSynagogeActivity extends AppCompatActivity {
             if (currentSynagoge != null) {
                 currentSynagoge.setName(EditTextEditSynagogeName.getText().toString());
                 currentSynagoge.setNosah(((Nosah) spinnerEditSynagogeNosah.getSelectedItem()));
+                currentSynagoge.setAddress(TextViewEditSynagogeAdress.getText().toString());
+
                 docRef.set(currentSynagoge).addOnCompleteListener(task -> {
                     Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show();
                 });
-                //todo urrentSynagoge.setAddress(EditTextEditSynagogeAdress.getText().toString());
                 //todo setimage not here
 
             }

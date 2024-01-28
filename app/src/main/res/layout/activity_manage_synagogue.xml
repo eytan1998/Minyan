@@ -7,7 +7,7 @@
     tools:context=".Activity.ManageSynagogeActivity">
 
     <Button
-        android:id="@+id/addMarkerButton"
+        android:id="@+id/buttonManageSynagogeSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/addMarkerEditText"
+        android:id="@+id/EditTextManageSynagogeName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -28,10 +28,10 @@
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/map" />
+        app:layout_constraintTop_toBottomOf="@+id/mapManageSynagoge" />
 
     <fragment
-        android:id="@+id/map"
+        android:id="@+id/mapManageSynagoge"
         class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="450dp"
@@ -40,22 +40,22 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonEdit"
+        android:id="@+id/buttonManageSynagogeEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ערוך בית כנסת"
-        app:layout_constraintBottom_toTopOf="@+id/addMarkerButton"
-        app:layout_constraintEnd_toEndOf="@+id/addMarkerButton"
-        app:layout_constraintStart_toStartOf="@+id/addMarkerButton" />
+        app:layout_constraintBottom_toTopOf="@+id/buttonManageSynagogeSave"
+        app:layout_constraintEnd_toEndOf="@+id/buttonManageSynagogeSave"
+        app:layout_constraintStart_toStartOf="@+id/buttonManageSynagogeSave" />
 
     <Button
-        android:id="@+id/buttonDEl"
+        android:id="@+id/buttonManageSynagogeDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="מחק בית כנסת"
-        app:layout_constraintBottom_toTopOf="@+id/buttonEdit"
-        app:layout_constraintEnd_toEndOf="@+id/buttonEdit"
-        app:layout_constraintStart_toStartOf="@+id/buttonEdit" />
+        app:layout_constraintBottom_toTopOf="@+id/buttonManageSynagogeEdit"
+        app:layout_constraintEnd_toEndOf="@+id/buttonManageSynagogeEdit"
+        app:layout_constraintStart_toStartOf="@+id/buttonManageSynagogeEdit" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

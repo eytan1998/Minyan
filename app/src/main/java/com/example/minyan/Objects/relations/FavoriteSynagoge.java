@@ -1,10 +1,17 @@
 package com.example.minyan.Objects.relations;
 
 public class FavoriteSynagoge {
+    public static String FAVORITE_SYNAGOGUE = "FAVORITE_SYNAGOGUE";
+
     String s_id;
     String prayer_email;
 
     public FavoriteSynagoge() {
+    }
+
+    public FavoriteSynagoge(String s_id, String prayer_email) {
+        this.s_id = s_id;
+        this.prayer_email = prayer_email;
     }
 
     public String getS_id() {

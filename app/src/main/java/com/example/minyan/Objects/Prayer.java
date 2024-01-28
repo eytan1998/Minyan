@@ -2,6 +2,13 @@ package com.example.minyan.Objects;
 
 import android.media.Image;
 
+import com.example.minyan.Objects.relations.FavoriteSynagoge;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class Prayer  {
     public static String PRAYER = "PRAYER";
     String name;
@@ -18,6 +25,29 @@ public class Prayer  {
 
     }
 
+    public void unFavoriteSynagogue(Synagoge synagoge) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(FavoriteSynagoge.FAVORITE_SYNAGOGUE).whereEqualTo("s_id", synagoge.getS_id())
+                .get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            // Get the document ID and delete the document
+                            String documentId = document.getId();
+                            db.collection(FavoriteSynagoge.FAVORITE_SYNAGOGUE)
+                                    .document(documentId)
+                                    .delete();
+                        }
+                    }
+                });
+    }
+
+    public String favoriteSynagogue(Synagoge synagoge) {
+        //todo if failed
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FavoriteSynagoge favoriteSynagoge = new FavoriteSynagoge(synagoge.getS_id(), this.email);
+        db.collection(FavoriteSynagoge.FAVORITE_SYNAGOGUE).add(favoriteSynagoge);
+        return synagoge.getS_id();
+    }
     public String getEmail() {
         return email;
     }

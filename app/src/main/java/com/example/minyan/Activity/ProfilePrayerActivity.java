@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,8 +32,9 @@ public class ProfilePrayerActivity extends AppCompatActivity {
 
         Button buttonProfilePrayerFindSynagoe = findViewById(R.id.buttonProfilePrayerFindSynagoe);
         Button buttonProfilePrayerMassages = findViewById(R.id.buttonProfilePrayerMassages);
+        Button buttonProfilePrayerFavorite = findViewById(R.id.buttonProfilePrayerFavorite);
 
-        //to get the gabai from user
+        //to get the prayer from user
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(Prayer.PRAYER).document(Prayer.PRAYER + "|" + Objects.requireNonNull(mAuth.getCurrentUser()).getEmail())
@@ -51,6 +53,10 @@ public class ProfilePrayerActivity extends AppCompatActivity {
         });
         buttonProfilePrayerMassages.setOnClickListener(v -> {
             Intent intent = new Intent(ProfilePrayerActivity.this, MassagesActivity.class);
+            startActivity(intent);
+        });
+        buttonProfilePrayerFavorite.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfilePrayerActivity.this, FavoriteActivity.class);
             startActivity(intent);
         });
 

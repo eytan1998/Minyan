@@ -132,6 +132,9 @@ public class Synagoge {
         this.more_detail = more_detail;
     }
 
-
+    @Override
+    public String toString() {
+        return this.name+"\n\t"+this.address;
+    }
 }
 

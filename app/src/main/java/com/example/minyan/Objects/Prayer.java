@@ -9,6 +9,9 @@ public class Prayer  {
     String quote;
     Image image;
 
+    public Prayer() {
+    }
+
     public Prayer(String name, String email) {
         this.name = name;
         this.email = email;

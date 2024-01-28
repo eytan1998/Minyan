@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,7 +33,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -49,78 +47,79 @@ import java.util.Objects;
 public class ManageSynagogeActivity extends AppCompatActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     LatLng centerOfMap;
-    Gabai gabai;
+
+    Gabai currentGabai;
     Synagoge currentSynagoge;
     Marker currentMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gabai_main);
+        setContentView(R.layout.activity_manage_synagogue);
 
 
-        EditText addMarkerEditText = findViewById(R.id.addMarkerEditText);
-        Button addMarkerButton = findViewById(R.id.addMarkerButton);
-        Button buttonDEl = findViewById(R.id.buttonDEl);
-        Button buttonEdit = findViewById(R.id.buttonEdit);
+        EditText EditTextManageSynagogeName = findViewById(R.id.EditTextManageSynagogeName);
+        Button buttonManageSynagogeSave = findViewById(R.id.buttonManageSynagogeSave);
+        Button buttonManageSynagogeDelete = findViewById(R.id.buttonManageSynagogeDelete);
+        Button buttonManageSynagogeEdit = findViewById(R.id.buttonManageSynagogeEdit);
 
-        //set up firebase database -> to save if successes signup
+        //to get currnet gabai
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        //
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection(Gabai.GABAI).document(Gabai.GABAI + "|" + Objects.requireNonNull(mAuth.getCurrentUser()).getEmail());
+        db.collection(Gabai.GABAI).document(Gabai.GABAI + "|" + Objects.requireNonNull(mAuth.getCurrentUser()).getEmail())
+                .get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        currentGabai = task.getResult().toObject(Gabai.class);
 
-        docRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                gabai = task.getResult().toObject(Gabai.class);
-
-                // Get the SupportMapFragment and request notification when the map is ready to be used.
-                SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                        .findFragmentById(R.id.map);
-                assert mapFragment != null;
-                mapFragment.getMapAsync(this);
-            }
-            //TODO throw exeption
-        });
+                        // set the map only after get the gabai
+                        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                                .findFragmentById(R.id.mapManageSynagoge);
+                        assert mapFragment != null;
+                        mapFragment.getMapAsync(this);
+                    }
+                    //TODO throw exeption
+                });
 
 
-        addMarkerButton.setOnClickListener(v -> {
+        buttonManageSynagogeSave.setOnClickListener(v -> {
             if (mMap != null) {
+                //add synagoge
+                Synagoge synagoge = new Synagoge(EditTextManageSynagogeName.getText().toString(), Nosah.ALL, centerOfMap.latitude, centerOfMap.longitude, getAddressFromLocation(ManageSynagogeActivity.this, centerOfMap.latitude, centerOfMap.longitude));
+                String s_id = currentGabai.addSynagoge(synagoge);
 
-                Synagoge synagoge = new Synagoge(addMarkerEditText.getText().toString(), Nosah.ALL, centerOfMap.latitude, centerOfMap.longitude, getAddressFromLocation(ManageSynagogeActivity.this,centerOfMap.latitude,centerOfMap.longitude));
-                String s_id = gabai.addSynagoge(synagoge);
-
+                //add marker
                 MarkerOptions markerOptions = new MarkerOptions()
                         .position(centerOfMap)
-                        .title(addMarkerEditText.getText().toString())
-                        .snippet(s_id)
+                        .title(EditTextManageSynagogeName.getText().toString())
+                        .snippet(s_id)//the way to connect synagogue to marker
                         .icon(getCustomMarkerIcon(R.drawable.ic_marker));
                 mMap.addMarker(markerOptions);
+
+                //so can edit/del this synagogue
                 currentSynagoge = synagoge;
-
-
             }
         });
-        buttonDEl.setOnClickListener(v -> {
+        // delete the current synagogue
+        buttonManageSynagogeDelete.setOnClickListener(v -> {
             //todo ask with dialog
             if (mMap != null) {
                 if (currentSynagoge != null) {
-                    gabai.delSynagoge(currentSynagoge);
+                    currentGabai.delSynagoge(currentSynagoge);
                     currentMarker.remove();
-                    addMarkerEditText.setText("");
+                    EditTextManageSynagogeName.setText("");
                     currentSynagoge = null;
                     currentMarker = null;
                 }
             }
         });
-        buttonEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mMap != null) {
-                    if (currentSynagoge != null) {
-                        Intent intent = new Intent(ManageSynagogeActivity.this, EditSynagogeActivity.class);
-                        intent.putExtra(Synagoge.SYNAGOGE, currentSynagoge.getS_id());
-                        startActivity(intent);
-                    }
+        //move the synagogue id to the edit Synagogue so will the synagogue
+        buttonManageSynagogeEdit.setOnClickListener(v -> {
+            if (mMap != null) {
+                if (currentSynagoge != null) {
+                    Intent intent = new Intent(ManageSynagogeActivity.this, EditSynagogeActivity.class);
+                    intent.putExtra(Synagoge.SYNAGOGE, currentSynagoge.getS_id());
+                    startActivity(intent);
                 }
             }
         });
@@ -131,23 +130,33 @@ public class ManageSynagogeActivity extends AppCompatActivity implements OnMapRe
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
+        //so can access the map from other
+        mMap = googleMap;
+        //set SATELLITE with names
+        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        //set start location at jerusalem
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(31.777980242130955, 35.2352939173555), 10f));
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        mMap = googleMap;
+        //get the center of map position
         mMap.setOnCameraIdleListener(() -> {
             CameraPosition cameraPosition = mMap.getCameraPosition();
             centerOfMap = cameraPosition.target;
         });
 
+        //so get update current synagogue if click on correspond marker
         mMap.setOnMarkerClickListener(marker -> {
             String s_id = marker.getSnippet();
             db.collection(Synagoge.SYNAGOGE).document(s_id).get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     currentMarker = marker;
                     currentSynagoge = task.getResult().toObject(Synagoge.class);
-                    ((TextView) findViewById(R.id.addMarkerEditText)).setText(currentSynagoge.getName());
+                    ((TextView) findViewById(R.id.EditTextManageSynagogeName)).setText(currentSynagoge.getName());
                 }
             });
+            //so the default layout wont pop out
+            // can custom in futer
             mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
                 @Nullable
                 @Override
@@ -169,23 +178,22 @@ public class ManageSynagogeActivity extends AppCompatActivity implements OnMapRe
 
             return false;
         });
-        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(31.777980242130955, 35.2352939173555), 10f));
 
-        db.collection(OwnSynagoge.OWN_SYNAGOGE).whereEqualTo("gabai_email", gabai.getEmail())
-                .get().addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        QuerySnapshot querySnapshot = task.getResult();
+        //get all the synagogue that gabai have
+        db.collection(OwnSynagoge.OWN_SYNAGOGE).whereEqualTo("gabai_email", currentGabai.getEmail())
+                .get().addOnCompleteListener(getAllSynagogueOfGabai -> {
+                    if (getAllSynagogueOfGabai.isSuccessful()) {
+                        QuerySnapshot querySnapshot = getAllSynagogueOfGabai.getResult();
                         if (querySnapshot != null) {
                             ArrayList<String> s_ids = new ArrayList<>();
                             for (QueryDocumentSnapshot document : querySnapshot) {
                                 s_ids.add(document.getString("s_id"));
                             }
                             if (!s_ids.isEmpty()) {
-                                db.collection(Synagoge.SYNAGOGE).whereIn("s_id", s_ids).get().addOnCompleteListener(task1 -> {
-                                    if (task1.isSuccessful()) {
-                                        QuerySnapshot querySnapshot1 = task1.getResult();
+                                db.collection(Synagoge.SYNAGOGE).whereIn("s_id", s_ids).get().addOnCompleteListener(getAllTheSynagogueTask -> {
+                                    if (getAllTheSynagogueTask.isSuccessful()) {
+                                        QuerySnapshot querySnapshot1 = getAllTheSynagogueTask.getResult();
                                         if (querySnapshot1 != null) {
                                             for (QueryDocumentSnapshot document : querySnapshot1) {
                                                 Synagoge s = document.toObject(Synagoge.class);
@@ -209,11 +217,14 @@ public class ManageSynagogeActivity extends AppCompatActivity implements OnMapRe
                 });
     }
 
+    //to add custom marker icon
     private BitmapDescriptor getCustomMarkerIcon(int resourceId) {
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resourceId);
         Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, 55, 80, false);
         return BitmapDescriptorFactory.fromBitmap(scaledBitmap);
     }
+
+    //on save location get the address
     private String getAddressFromLocation(Context context, double latitude, double longitude) {
         Geocoder geocoder = new Geocoder(context, Locale.getDefault());
 

@@ -35,10 +35,10 @@ import java.util.List;
 
 public class EditSynagogeActivity extends AppCompatActivity {
 
-    Synagoge currentSynagoge;
-    Pray currentPray = null;
-    RecyclerView recyclerView;
-    RecyclerAdapterPray recyclerAdapter;
+    private Synagoge currentSynagoge;
+    private Pray currentPray = null;
+    private RecyclerView recyclerView;
+    private RecyclerAdapterPray recyclerAdapter;
     private final List<Pray> prays = new ArrayList<>();
 
     @Override
@@ -232,7 +232,7 @@ public class EditSynagogeActivity extends AppCompatActivity {
     /**
      * =========================RecyclerAdapterPray==================================
      */
-    public class RecyclerAdapterPray extends RecyclerView.Adapter<RecyclerAdapterPray.ViewHolder> {
+    protected class RecyclerAdapterPray extends RecyclerView.Adapter<RecyclerAdapterPray.ViewHolder> {
         List<Pray> pray;
 
         public RecyclerAdapterPray(List<Pray> list) {

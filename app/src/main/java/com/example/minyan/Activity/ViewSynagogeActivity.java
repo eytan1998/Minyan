@@ -136,7 +136,7 @@ public class ViewSynagogeActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull RecyclerAdapterPray.ViewHolder holder, int position) {
 
-            holder.TextViewlist_iteam.setText(pray.get(position).getKind().getDisplayName()+" : "+pray.get(position).getName()+"\n"+pray.get(position).getTime());
+            holder.TextViewlist_iteam.setText(pray.get(position).toString());
             holder.Buttonlist_prayDel.setVisibility(View.INVISIBLE);
 
 

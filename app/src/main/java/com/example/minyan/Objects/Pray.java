@@ -64,4 +64,9 @@ public class Pray {
     public void setMoreDetail(String moreDetail) {
         this.moreDetail = moreDetail;
     }
+
+    @Override
+    public String toString() {
+        return this.kind.getDisplayName()+" : "+this.name+"\n"+this.time;
+    }
 }

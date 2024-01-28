@@ -249,7 +249,7 @@ public class EditSynagogeActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-            holder.TextViewlist_iteam.setText(pray.get(position).getName());
+            holder.TextViewlist_iteam.setText(pray.get(position).toString());
 
 
         }

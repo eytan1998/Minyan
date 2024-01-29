@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.minyan.Objects.Gabai;
+import com.example.minyan.Objects.Prayer;
 import com.example.minyan.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -51,6 +52,7 @@ public class ProfileGabiActivity extends AppCompatActivity {
         });
         buttonProfileGabiMassages.setOnClickListener(v -> {
             Intent intent = new Intent(ProfileGabiActivity.this, MassagesActivity.class);
+            intent.putExtra("KIND", Gabai.GABAI);
             startActivity(intent);
         });
 

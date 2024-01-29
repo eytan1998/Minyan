@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.minyan.Objects.Gabai;
 import com.example.minyan.Objects.Prayer;
 import com.example.minyan.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -53,6 +54,7 @@ public class ProfilePrayerActivity extends AppCompatActivity {
         });
         buttonProfilePrayerMassages.setOnClickListener(v -> {
             Intent intent = new Intent(ProfilePrayerActivity.this, MassagesActivity.class);
+            intent.putExtra("KIND", Prayer.PRAYER);
             startActivity(intent);
         });
         buttonProfilePrayerFavorite.setOnClickListener(v -> {

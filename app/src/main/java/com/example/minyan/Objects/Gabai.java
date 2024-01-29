@@ -109,6 +109,10 @@ public class Gabai {
     public void setQuote(String quote) {
         this.quote = quote;
     }
+
+    public String getEntry() {
+        return Gabai.GABAI + "|" +this.email;
+    }
 }
 
 

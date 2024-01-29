@@ -1,12 +1,20 @@
 package com.example.minyan.Objects;
 
-import java.util.Date;
+import java.util.Calendar;
 
 public class Massage {
+    public final static String MASSAGE = "MASSAGE";
     String from;
     String to;
-    Date time;
+    Calendar date;
     String text;
+
+    public Massage(String from, String to, String text) {
+        this.from = from;
+        this.to = to;
+        this.date = Calendar.getInstance();
+        this.text = text;
+    }
 
     public Massage() {
     }
@@ -27,12 +35,12 @@ public class Massage {
         this.to = to;
     }
 
-    public Date getTime() {
-        return time;
+    public Calendar getDate() {
+        return date;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setDate(Calendar date) {
+        this.date = date;
     }
 
     public String getText() {

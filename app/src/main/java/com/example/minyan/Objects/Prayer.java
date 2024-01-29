@@ -3,6 +3,7 @@ package com.example.minyan.Objects;
 import android.media.Image;
 
 import com.example.minyan.Objects.relations.FavoriteSynagoge;
+import com.example.minyan.Objects.relations.LikeSynagogue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -24,6 +25,33 @@ public class Prayer  {
         this.email = email;
 
     }
+
+    public void unLikeSynagogue(Synagoge synagoge) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(LikeSynagogue.LIKE_SYNAGOGUE).whereEqualTo("s_id", synagoge.getS_id())
+                .get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            // Get the document ID and delete the document
+                            String documentId = document.getId();
+                            db.collection(LikeSynagogue.LIKE_SYNAGOGUE)
+                                    .document(documentId)
+                                    .delete();
+                        }
+                    }
+                });
+    }
+
+    public void likeSynagogue(Synagoge synagoge) {
+        //todo if failed
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        LikeSynagogue likeSynagogue = new LikeSynagogue(synagoge.getS_id(), this.email);
+        db.collection(LikeSynagogue.LIKE_SYNAGOGUE).add(likeSynagogue);
+
+
+    }
+
+
 
     public void unFavoriteSynagogue(Synagoge synagoge) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -79,6 +107,9 @@ public class Prayer  {
     public void setImage(Image image) {
         this.image = image;
     }
+    public String getEntry() {
+        return Prayer.PRAYER + "|" +this.email;
+    }
 
     @Override
     public String toString() {
@@ -87,4 +118,7 @@ public class Prayer  {
                 ", name='" + name + '\'' +
                 '}';
     }
+
+
+
 }

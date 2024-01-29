@@ -30,12 +30,12 @@
     <ScrollView
         android:layout_width="415dp"
         android:layout_height="0dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewViewSYnagogeAdress"
+        app:layout_constraintTop_toBottomOf="@+id/buttonViewSYnagogeSendMassage"
         app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -90,13 +90,13 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewViewSynagoge"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-
                 android:layout_width="0dp"
+
                 android:layout_height="300dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView11">
@@ -120,6 +120,7 @@
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="52dp"
         android:layout_height="48dp"
+        android:background="@drawable/ic_not_like"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -140,5 +141,22 @@
         android:background="@drawable/ic_black_report"
         app:layout_constraintEnd_toStartOf="@+id/buttonViewSYnagogeFavorite"
         app:layout_constraintTop_toTopOf="@+id/buttonViewSYnagogeFavorite" />
+
+    <Button
+        android:id="@+id/buttonViewSYnagogeSendMassage"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="52dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/baseline_chat_24"
+        app:layout_constraintStart_toStartOf="@+id/textViewViewSYnagogeAdress"
+        app:layout_constraintTop_toBottomOf="@+id/textViewViewSYnagogeAdress" />
+
+    <TextView
+        android:id="@+id/textViewViewSYnagogeLike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonViewSYnagogeLike" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

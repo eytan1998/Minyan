@@ -204,7 +204,7 @@ public class EditSynagogeActivity extends AppCompatActivity {
                     prays.add(p);
                     recyclerAdapter.notifyItemInserted(recyclerAdapter.getItemCount());
 
-
+                    //todo java.lang.NullPointerException: Attempt to invoke virtual method 'int com.example.minyan.Activity.EditSynagogeActivity$RecyclerAdapterPray.getItemCount()' on a null object reference
                 }
 
 
@@ -242,7 +242,7 @@ public class EditSynagogeActivity extends AppCompatActivity {
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(EditSynagogeActivity.this).inflate(R.layout.list_pray, parent, false);
+            View view = LayoutInflater.from(EditSynagogeActivity.this).inflate(R.layout.iteam_text_and_remove, parent, false);
             return new ViewHolder(view);
         }
 

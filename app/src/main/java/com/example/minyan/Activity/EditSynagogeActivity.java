@@ -204,7 +204,7 @@ public class EditSynagogeActivity extends AppCompatActivity {
                     prays.add(p);
                     recyclerAdapter.notifyItemInserted(recyclerAdapter.getItemCount());
 
-
+                    //todo java.lang.NullPointerException: Attempt to invoke virtual method 'int com.example.minyan.Activity.EditSynagogeActivity$RecyclerAdapterPray.getItemCount()' on a null object reference
                 }
 
 

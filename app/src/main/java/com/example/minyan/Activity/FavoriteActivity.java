@@ -7,21 +7,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.minyan.Objects.Pray;
 import com.example.minyan.Objects.Prayer;
 import com.example.minyan.Objects.Synagoge;
 import com.example.minyan.Objects.relations.FavoriteSynagoge;
-import com.example.minyan.Objects.relations.PrayInSynagoge;
 import com.example.minyan.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -106,7 +102,7 @@ public class FavoriteActivity extends AppCompatActivity {
         @NonNull
         @Override
         public RecyclerAdapterPray.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(FavoriteActivity.this).inflate(R.layout.list_pray, parent, false);
+            View view = LayoutInflater.from(FavoriteActivity.this).inflate(R.layout.iteam_text_and_remove, parent, false);
             return new RecyclerAdapterPray.ViewHolder(view);
         }
 

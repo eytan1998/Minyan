@@ -6,21 +6,16 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,27 +24,19 @@ import com.example.minyan.Objects.Massage;
 import com.example.minyan.Objects.Pray;
 import com.example.minyan.Objects.Prayer;
 import com.example.minyan.Objects.Synagoge;
-import com.example.minyan.Objects.enums.Kind;
 import com.example.minyan.Objects.relations.FavoriteSynagoge;
 import com.example.minyan.Objects.relations.LikeSynagogue;
 import com.example.minyan.Objects.relations.OwnSynagoge;
 import com.example.minyan.Objects.relations.PrayInSynagoge;
 import com.example.minyan.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ViewSynagogeActivity extends AppCompatActivity {
 
@@ -182,7 +169,6 @@ public class ViewSynagogeActivity extends AppCompatActivity {
                                                                         prays.add(document.toObject(Pray.class));
 
                                                                     }
-                                                                    Log.e("TAG", "onCreate: " + prays.toString());
                                                                     recyclerAdapter = new RecyclerAdapterPray(prays);
                                                                     recyclerView.setAdapter(recyclerAdapter);
 
@@ -282,8 +268,6 @@ public class ViewSynagogeActivity extends AppCompatActivity {
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                     db.collection(Massage.MASSAGE).add(massage);
                 }
-                Log.e("TAG", "onCreate: "+currentPrayer );
-                Log.e("TAG", "onCreate: "+curretGabai );
                 if (massage == null) return;
 
                 Toast.makeText(ViewSynagogeActivity.this, "הודעה נשלחה", Toast.LENGTH_SHORT).show();
@@ -310,7 +294,7 @@ public class ViewSynagogeActivity extends AppCompatActivity {
         @NonNull
         @Override
         public RecyclerAdapterPray.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(ViewSynagogeActivity.this).inflate(R.layout.list_pray, parent, false);
+            View view = LayoutInflater.from(ViewSynagogeActivity.this).inflate(R.layout.iteam_text_and_remove, parent, false);
             return new RecyclerAdapterPray.ViewHolder(view);
         }
 

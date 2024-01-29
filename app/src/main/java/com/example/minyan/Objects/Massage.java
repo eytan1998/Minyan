@@ -1,18 +1,22 @@
 package com.example.minyan.Objects;
 
+import com.google.firebase.Timestamp;
+
 import java.util.Calendar;
 
-public class Massage {
+public class Massage  implements Comparable<Massage> {
     public final static String MASSAGE = "MASSAGE";
     String from;
     String to;
-    Calendar date;
+    Timestamp date;
     String text;
 
     public Massage(String from, String to, String text) {
         this.from = from;
         this.to = to;
-        this.date = Calendar.getInstance();
+        Timestamp timestamp = new com.google.firebase.Timestamp(Calendar.getInstance().getTime());
+        this.date = timestamp;
+
         this.text = text;
     }
 
@@ -35,11 +39,11 @@ public class Massage {
         this.to = to;
     }
 
-    public Calendar getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(Calendar date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 
@@ -49,5 +53,20 @@ public class Massage {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    @Override
+    public int compareTo(Massage o) {
+        return this.date.compareTo(o.date);
+    }
+
+    @Override
+    public String toString() {
+        return "Massage{" +
+                "from='" + from + '\'' +
+                ", to='" + to + '\'' +
+                ", date=" + date +
+                ", text='" + text + '\'' +
+                '}';
     }
 }

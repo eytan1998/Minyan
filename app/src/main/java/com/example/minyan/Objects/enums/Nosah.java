@@ -1,16 +1,24 @@
 package com.example.minyan.Objects.enums;
 
-public enum Nosah {
 
-    ALL("כל נוסח", 0),
-    ASHKENAZ("אשכנז", 1);
+import com.example.minyan.R;
+
+public enum Nosah {
+    ALL("כל נוסח", 0, R.drawable.ic_marker_all),
+    ASHKENAZ("אשכנז", 1, R.drawable.ic_marker_askenaz),
+    SPARD("ספרד", 1, R.drawable.ic_marker_spard),
+    SPARADI("ספרדי", 1, R.drawable.ic_marker_spradi),
+    BALADY("בלדי", 1, R.drawable.ic_marker_balady),
+    SHAMI("שאמי", 1, R.drawable.ic_marker_shami);
     private final String displayName;
     private final int index;
+    private final int icMarkerId;
 
 
-    Nosah(String displayName, int index) {
+    Nosah(String displayName, int index, int icMarkerId) {
         this.displayName = displayName;
         this.index = index;
+        this.icMarkerId = icMarkerId;
     }
 
 
@@ -26,5 +34,9 @@ public enum Nosah {
 
     public int getIntValue() {
         return this.index;
+    }
+
+    public int getIconId() {
+        return icMarkerId;
     }
 }

@@ -107,7 +107,7 @@ public class FindSynagogueActivity extends AppCompatActivity implements OnMapRea
                         MarkerOptions markerOptions = new MarkerOptions()
                                 .position(new LatLng(s.getLat(), s.getLng()))
                                 .title(s.getName())
-                                .icon(getCustomMarkerIcon(R.drawable.ic_marker))
+                                .icon(getCustomMarkerIcon(s.getNosah().getIconId()))
                                 .snippet(s.getS_id());
                         mMap.addMarker(markerOptions);
                     }

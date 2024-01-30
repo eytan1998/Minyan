@@ -93,7 +93,7 @@ public class ManageSynagogeActivity extends AppCompatActivity implements OnMapRe
                         .position(centerOfMap)
                         .title(EditTextManageSynagogeName.getText().toString())
                         .snippet(s_id)//the way to connect synagogue to marker
-                        .icon(getCustomMarkerIcon(R.drawable.ic_marker));
+                        .icon(getCustomMarkerIcon(synagoge.getNosah().getIconId()));
                 mMap.addMarker(markerOptions);
 
                 //so can edit/del this synagogue
@@ -201,7 +201,7 @@ public class ManageSynagogeActivity extends AppCompatActivity implements OnMapRe
                                                 MarkerOptions markerOptions = new MarkerOptions()
                                                         .position(new LatLng(s.getLat(), s.getLng()))
                                                         .title(s.getName())
-                                                        .icon(getCustomMarkerIcon(R.drawable.ic_marker))
+                                                        .icon(getCustomMarkerIcon(s.getNosah().getIconId()))
                                                         .snippet(s.getS_id());
                                                 mMap.addMarker(markerOptions);
                                             }

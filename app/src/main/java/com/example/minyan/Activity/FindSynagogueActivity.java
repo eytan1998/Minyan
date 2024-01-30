@@ -7,11 +7,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.minyan.Objects.Synagoge;
 import com.example.minyan.R;
@@ -41,18 +46,79 @@ public class FindSynagogueActivity extends AppCompatActivity implements OnMapRea
     //so can go to ViewSynagogue
     Synagoge currentSynagoge;
 
+    QuerySnapshot allSynagogue;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_synagoge);
 
+        CheckBox checkBoxFindSynagogeSharit = findViewById(R.id.checkBoxFindSynagogeSharit);
+        CheckBox checkBoxFindSynagogeMinha = findViewById(R.id.checkBoxFindSynagogeMinha);
+        CheckBox checkBoxFindSynagogeArvit = findViewById(R.id.checkBoxFindSynagogeArvit);
+        CheckBox checkBoxFindSynagogeMacro = findViewById(R.id.checkBoxFindSynagogeMacro);
+
+        TextView textViewFindSynagogeDistance = findViewById(R.id.textViewFindSynagogeDistance);
+        SeekBar seekBarFindSynagogeDistance = findViewById(R.id.seekBarFindSynagogeDistance);
+
+        Button buttonFindSynagogueSearch = findViewById(R.id.buttonFindSynagogueSearch);
         Button buttonFindSynagogueViewSynagogue = findViewById(R.id.buttonFindSynagogueViewSynagogue);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.mapFindSynagoge);
-        assert mapFragment != null;
-        mapFragment.getMapAsync(this);
+        textViewFindSynagogeDistance.setText("100KM");
 
+        seekBarFindSynagogeDistance.setMax(1000);//1 -> 100m, 10 -> 1km,100 ->10km,1000 -> 100km
+        seekBarFindSynagogeDistance.setProgress(seekBarFindSynagogeDistance.getMax());
+        seekBarFindSynagogeDistance.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                textViewFindSynagogeDistance.setText(String.valueOf(progress/10.0)+"KM");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(Synagoge.SYNAGOGE).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                allSynagogue = task.getResult();
+
+                SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                        .findFragmentById(R.id.mapFindSynagoge);
+                assert mapFragment != null;
+                mapFragment.getMapAsync(this);
+            }
+        });
+
+
+        buttonFindSynagogueSearch.setOnClickListener(v -> {
+            if (mMap != null && allSynagogue != null) {
+                mMap.clear();
+                for (QueryDocumentSnapshot d:allSynagogue) {
+                    Synagoge s = d.toObject(Synagoge.class);
+                    double distanceKM = Synagoge.calculateHaversineDistance(s.getLat(),s.getLng(),centerOfMap.latitude,centerOfMap.longitude);
+                    if(distanceKM<= seekBarFindSynagogeDistance.getProgress()/10.0){
+                        MarkerOptions markerOptions = new MarkerOptions()
+                                .position(new LatLng(s.getLat(), s.getLng()))
+                                .title(s.getName())
+                                .icon(getCustomMarkerIcon(s.getNosah().getIconId()))
+                                .snippet(s.getS_id());
+                        mMap.addMarker(markerOptions);
+                    }
+                }
+
+
+            } else {
+                Toast.makeText(FindSynagogueActivity.this, "נא לחכות", Toast.LENGTH_LONG).show();
+            }
+
+        });
         buttonFindSynagogueViewSynagogue.setOnClickListener(v -> {
             if (mMap != null) {
                 if (currentSynagoge != null) {
@@ -62,6 +128,7 @@ public class FindSynagogueActivity extends AppCompatActivity implements OnMapRea
                 }
             }
         });
+
     }
 
     @Override
@@ -113,22 +180,17 @@ public class FindSynagogueActivity extends AppCompatActivity implements OnMapRea
             return false;
         });
 
-        db.collection(Synagoge.SYNAGOGE).get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                for (QueryDocumentSnapshot document : task.getResult()) {
-                    Synagoge s = document.toObject(Synagoge.class);
-                    MarkerOptions markerOptions = new MarkerOptions()
-                            .position(new LatLng(s.getLat(), s.getLng()))
-                            .title(s.getName())
-                            .icon(getCustomMarkerIcon(R.drawable.ic_marker))
-                            .snippet(s.getS_id());
-                    mMap.addMarker(markerOptions);
-                }
-            }
-        });
+//        MarkerOptions markerOptions = new MarkerOptions()
+//                .position(new LatLng(s.getLat(), s.getLng()))
+//                .title(s.getName())
+//                .icon(getCustomMarkerIcon(R.drawable.ic_marker))
+//                .snippet(s.getS_id());
+//        mMap.addMarker(markerOptions);
+
+
     }
 
-                //to add custom marker icon
+    //to add custom marker icon
     private BitmapDescriptor getCustomMarkerIcon(int resourceId) {
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resourceId);
         Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, 55, 80, false);

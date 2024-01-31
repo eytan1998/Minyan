@@ -36,7 +36,7 @@ public class ProfileGabiActivity extends AppCompatActivity {
         //to get the gabai from user
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(Gabai.GABAI).document(Gabai.GABAI + "|" + Objects.requireNonNull(mAuth.getCurrentUser()).getEmail())
+        db.collection(getString(R.string.entry_gabai)).document(getString(R.string.entry_gabai) + "|" + Objects.requireNonNull(mAuth.getCurrentUser()).getEmail())
                 .get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         currentGabai = task.getResult().toObject(Gabai.class);
@@ -52,7 +52,7 @@ public class ProfileGabiActivity extends AppCompatActivity {
         });
         buttonProfileGabiMassages.setOnClickListener(v -> {
             Intent intent = new Intent(ProfileGabiActivity.this, MassagesActivity.class);
-            intent.putExtra("KIND", Gabai.GABAI);
+            intent.putExtra(getString(R.string.kind), getString(R.string.entry_gabai));
             startActivity(intent);
         });
 

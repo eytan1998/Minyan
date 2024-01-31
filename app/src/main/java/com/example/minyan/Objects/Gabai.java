@@ -5,6 +5,7 @@ import android.media.Image;
 import androidx.annotation.NonNull;
 
 import com.example.minyan.Objects.relations.OwnSynagoge;
+import com.example.minyan.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -15,7 +16,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.Objects;
 
 public class Gabai {
-    public static String GABAI = "GABAI";
     String email;
     String name;
 
@@ -111,7 +111,7 @@ public class Gabai {
     }
 
     public String getEntry() {
-        return Gabai.GABAI + "|" +this.email;
+        return R.string.entry_gabai+ "|" +this.email;
     }
 }
 

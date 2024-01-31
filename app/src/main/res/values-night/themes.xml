@@ -3,5 +3,8 @@
     <style name="Base.Theme.Minyan" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/my_dark_primary</item>
+        <item name="colorAccent">@color/my_dark_accent</item>
+        <item name="android:colorBackground">@color/background</item>
     </style>
 </resources>

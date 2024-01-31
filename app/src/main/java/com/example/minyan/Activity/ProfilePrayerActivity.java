@@ -38,7 +38,7 @@ public class ProfilePrayerActivity extends AppCompatActivity {
         //to get the prayer from user
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(Prayer.PRAYER).document(Prayer.PRAYER + "|" + Objects.requireNonNull(mAuth.getCurrentUser()).getEmail())
+        db.collection(getString(R.string.entry_prayer)).document(getString(R.string.entry_prayer) + "|" + Objects.requireNonNull(mAuth.getCurrentUser()).getEmail())
                 .get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         currentPrayer = task.getResult().toObject(Prayer.class);
@@ -54,7 +54,7 @@ public class ProfilePrayerActivity extends AppCompatActivity {
         });
         buttonProfilePrayerMassages.setOnClickListener(v -> {
             Intent intent = new Intent(ProfilePrayerActivity.this, MassagesActivity.class);
-            intent.putExtra("KIND", Prayer.PRAYER);
+            intent.putExtra(getString(R.string.kind), getString(R.string.entry_prayer));
             startActivity(intent);
         });
         buttonProfilePrayerFavorite.setOnClickListener(v -> {

@@ -6,13 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".Activity.SignUpActivity">
 
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/sawarabi_gothic"
+        android:text="@string/en_app_name"
+        android:textSize="70sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
         android:id="@+id/editTextSignUpEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="אימייל"
+        android:hint="@string/email"
         android:inputType="textEmailAddress"
         app:layout_constraintStart_toStartOf="@+id/editTextSignUpName"
         app:layout_constraintTop_toBottomOf="@+id/editTextSignUpName" />
@@ -21,21 +33,21 @@
         android:id="@+id/editTextSignUpPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="פלאפון"
+        android:hint="@string/phone"
         android:inputType="phone"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/editTextSignUpPassword2"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxSignUpIsGabai" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextSignUpPassword2" />
 
     <EditText
         android:id="@+id/editTextSignUpPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="סיסמא"
+        android:hint="@string/password"
         android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="@+id/editTextSignUpEmail"
         app:layout_constraintTop_toBottomOf="@+id/editTextSignUpEmail" />
@@ -44,31 +56,24 @@
         android:id="@+id/editTextSignUpPassword2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="שוב סיסמא"
+        android:hint="@string/password_again"
         android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="@+id/editTextSignUpPassword"
         app:layout_constraintTop_toBottomOf="@+id/editTextSignUpPassword" />
 
-    <CheckBox
-        android:id="@+id/checkBoxSignUpIsGabai"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="גבאי?"
-        app:layout_constraintStart_toStartOf="@+id/editTextSignUpPassword2"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSignUpPassword2" />
-
     <Button
         android:id="@+id/buttonSignUpSignUp"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="50dp"
         android:text="@string/signIn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSignUpInfo"
+        app:layout_constraintVertical_bias="0.94" />
 
     <EditText
         android:id="@+id/editTextSignUpName"
@@ -76,20 +81,44 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:ems="10"
-        android:hint="שם מלא"
+        android:hint="@string/full_name"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView1" />
+
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="50dp"
+        android:text="@string/info_after_signup_varify_email"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSignUpPhone" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView23"
+        app:layout_constraintEnd_toStartOf="@+id/textView23"
+        app:layout_constraintTop_toTopOf="@+id/textView23"
+        app:srcCompat="@drawable/ic_info" />
 
     <TextView
         android:id="@+id/textViewSignUpInfo"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="טקסט הסבר לגבי תהליך רישום של הגבאי"
+        android:layout_marginTop="8dp"
+        android:text="@string/info_after_signup_varify_phone"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/editTextSignUpPhone"
-        app:layout_constraintStart_toStartOf="@+id/editTextSignUpPhone"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSignUpPhone" />
+        app:layout_constraintEnd_toEndOf="@+id/textView23"
+        app:layout_constraintStart_toStartOf="@+id/textView23"
+        app:layout_constraintTop_toBottomOf="@+id/textView23" />
 </androidx.constraintlayout.widget.ConstraintLayout>

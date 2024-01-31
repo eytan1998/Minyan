@@ -79,7 +79,7 @@ public class ViewSynagogeActivity extends AppCompatActivity {
         String s_id = getIntent().getStringExtra(Synagoge.SYNAGOGE);
 
 
-        db.collection(Prayer.PRAYER).document(Prayer.PRAYER + "|" + Objects.requireNonNull(mAuth.getCurrentUser()).getEmail())
+        db.collection(getString(R.string.entry_prayer)).document(getString(R.string.entry_prayer) + "|" + Objects.requireNonNull(mAuth.getCurrentUser()).getEmail())
                 .get().addOnCompleteListener(getPrayerTask -> {
                     if (getPrayerTask.isSuccessful()) {
                         currentPrayer = getPrayerTask.getResult().toObject(Prayer.class);
@@ -100,7 +100,7 @@ public class ViewSynagogeActivity extends AppCompatActivity {
                                                     // Get the document ID and delete the document
                                                     String gabaiId = document.getString("gabai_email");
                                                     Log.e("TAG", "onCreate: "+gabaiId );
-                                                    db.collection(Gabai.GABAI).document(Gabai.GABAI + "|" + gabaiId)
+                                                    db.collection(getString(R.string.entry_gabai)).document(getString(R.string.entry_gabai) + "|" + gabaiId)
                                                             .get()
                                                             .addOnCompleteListener(getTheGabaiTask -> {
                                                                 if (getTheGabaiTask.isSuccessful()) {

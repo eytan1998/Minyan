@@ -54,13 +54,13 @@ public class MassagesActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerViewMassages);
 
-        kindOfAccount = getIntent().getStringExtra("KIND");
+        kindOfAccount = getIntent().getStringExtra(getString(R.string.kind));
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         assert kindOfAccount != null;
-        if (kindOfAccount.compareTo(Prayer.PRAYER) == 0) {
+        if (kindOfAccount.compareTo(getString(R.string.entry_prayer)) == 0) {
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
-            db.collection(Prayer.PRAYER).document(Prayer.PRAYER + "|" + Objects.requireNonNull(mAuth.getCurrentUser()).getEmail())
+            db.collection(getString(R.string.entry_prayer)).document(getString(R.string.entry_prayer) + "|" + Objects.requireNonNull(mAuth.getCurrentUser()).getEmail())
                     .get().addOnCompleteListener(getPrayerTask -> {
                         if (getPrayerTask.isSuccessful()) {
                             currentPrayer = getPrayerTask.getResult().toObject(Prayer.class);
@@ -113,9 +113,9 @@ public class MassagesActivity extends AppCompatActivity {
                         }
                     });
 
-        } else if (kindOfAccount.compareTo(Gabai.GABAI) == 0) {
+        } else if (kindOfAccount.compareTo(getString(R.string.entry_gabai)) == 0) {
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
-            db.collection(Gabai.GABAI).document(Gabai.GABAI + "|" + Objects.requireNonNull(mAuth.getCurrentUser()).getEmail())
+            db.collection(getString(R.string.entry_gabai)).document(getString(R.string.entry_gabai) + "|" + Objects.requireNonNull(mAuth.getCurrentUser()).getEmail())
                     .get().addOnCompleteListener(getGabaiTask -> {
                         if (getGabaiTask.isSuccessful()) {
                             currentGabai = getGabaiTask.getResult().toObject(Gabai.class);
@@ -222,14 +222,14 @@ public class MassagesActivity extends AppCompatActivity {
 
                 itemView.setOnClickListener(v -> {
                     Intent intent = new Intent(MassagesActivity.this, ChatActivity.class);
-                    if (kindOfAccount.compareTo(Prayer.PRAYER) == 0) {
-                        intent.putExtra("ME", currentPrayer.getEntry());
+                    if (kindOfAccount.compareTo(getString(R.string.entry_prayer)) == 0) {
+                        intent.putExtra(getString(R.string.me), currentPrayer.getEntry());
 
-                    } else if (kindOfAccount.compareTo(Gabai.GABAI) == 0) {
-                        intent.putExtra("ME", currentGabai.getEntry());
+                    } else if (kindOfAccount.compareTo(getString(R.string.entry_gabai)) == 0) {
+                        intent.putExtra(getString(R.string.me), currentGabai.getEntry());
                     }
-                    intent.putExtra("HIM", listMap.get(getAdapterPosition()).getKey());
-                    intent.putExtra("KIND", kindOfAccount);
+                    intent.putExtra(getString(R.string.him), listMap.get(getAdapterPosition()).getKey());
+                    intent.putExtra(getString(R.string.kind), kindOfAccount);
                     startActivity(intent);
                 });
 

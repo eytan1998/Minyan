@@ -43,7 +43,7 @@ public class FavoriteActivity extends AppCompatActivity {
         //to get the prayer from user
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(Prayer.PRAYER).document(Prayer.PRAYER + "|" + Objects.requireNonNull(mAuth.getCurrentUser()).getEmail())
+        db.collection(getString(R.string.entry_prayer)).document(getString(R.string.entry_prayer) + "|" + Objects.requireNonNull(mAuth.getCurrentUser()).getEmail())
                 .get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         currentPrayer = task.getResult().toObject(Prayer.class);

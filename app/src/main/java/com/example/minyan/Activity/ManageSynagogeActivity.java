@@ -67,7 +67,7 @@ public class ManageSynagogeActivity extends AppCompatActivity implements OnMapRe
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         //
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(Gabai.GABAI).document(Gabai.GABAI + "|" + Objects.requireNonNull(mAuth.getCurrentUser()).getEmail())
+        db.collection(getString(R.string.entry_gabai)).document(getString(R.string.entry_gabai) + "|" + Objects.requireNonNull(mAuth.getCurrentUser()).getEmail())
                 .get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         currentGabai = task.getResult().toObject(Gabai.class);

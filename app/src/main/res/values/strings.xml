@@ -1,4 +1,25 @@
 <resources>
     <string name="app_name">מניין</string>
     <string name="signIn">הירשם</string>
+    <string name="kind">KIND</string>
+    <string name="me">ME</string>
+    <string name="him">HIM</string>
+    <string name="enter_as_gabai">כניסה כגבאי</string>
+    <string name="enter_as_prayer">כניסה כמתפלל</string>
+    <string name="en_app_name">Minyan</string>
+    <string name="one_or_more_is_empty">לפחות אחת השדות רקות</string>
+    <string name="entry_gabai">GABAI</string>
+    <string name="wait_for_phone_auth">צריך לחכות לאימות טלפוני</string>
+    <string name="not_gabai">אתה לא גבאי</string>
+    <string name="entry_prayer">PRAYER</string>
+    <string name="email">איימל</string>
+    <string name="password">סיסמה</string>
+    <string name="login">התחבר</string>
+    <string name="do_you_hava_account">אין לך חשבון ?</string>
+    <string name="password_not_match">הססמאות אינם זהות</string>
+    <string name="full_name">שם מלא</string>
+    <string name="info_after_signup_varify_email">לאחר רישום יישלח מייל כדי לאמת את כתובת האיימל</string>
+    <string name="info_after_signup_varify_phone">למען הבטיחות צריך להזין מספר פלפון כדי לעבור אימות על מנת להיות גבאי</string>
+    <string name="phone">פלאפון</string>
+    <string name="password_again">שוב סיסמא</string>
 </resources>

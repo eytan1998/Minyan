@@ -4,6 +4,7 @@ import android.media.Image;
 
 import com.example.minyan.Objects.relations.FavoriteSynagoge;
 import com.example.minyan.Objects.relations.LikeSynagogue;
+import com.example.minyan.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -11,7 +12,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Prayer  {
-    public static String PRAYER = "PRAYER";
     String name;
     String email;
     String quote;
@@ -108,7 +108,7 @@ public class Prayer  {
         this.image = image;
     }
     public String getEntry() {
-        return Prayer.PRAYER + "|" +this.email;
+        return R.string.entry_prayer + "|" +this.email;
     }
 
     @Override

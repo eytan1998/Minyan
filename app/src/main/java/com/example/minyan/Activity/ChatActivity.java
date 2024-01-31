@@ -48,33 +48,33 @@ public class ChatActivity extends AppCompatActivity {
         EditText editTextChatText = findViewById(R.id.editTextChatText);
         Button buttonChatSend = findViewById(R.id.buttonChatSend);
 
-        EntryMe = getIntent().getStringExtra("ME");
-        EntryHim = getIntent().getStringExtra("HIM");
-        kindOfAccount = getIntent().getStringExtra("KIND");
+        EntryMe = getIntent().getStringExtra(getString(R.string.me));
+        EntryHim = getIntent().getStringExtra(getString(R.string.him));
+        kindOfAccount = getIntent().getStringExtra(getString(R.string.kind));
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        if (kindOfAccount.compareTo(Prayer.PRAYER) == 0) {
-            db.collection(Prayer.PRAYER).document(EntryMe).get().addOnCompleteListener(getPrayerTask -> {
+        if (kindOfAccount.compareTo(getString(R.string.entry_prayer)) == 0) {
+            db.collection(getString(R.string.entry_prayer)).document(EntryMe).get().addOnCompleteListener(getPrayerTask -> {
                 if (getPrayerTask.isSuccessful()) {
                     currentPrayer = getPrayerTask.getResult().toObject(Prayer.class);
                 }
             });
-            db.collection(Gabai.GABAI).document(EntryHim).get().addOnCompleteListener(getGabai -> {
+            db.collection(getString(R.string.entry_gabai)).document(EntryHim).get().addOnCompleteListener(getGabai -> {
                 if (getGabai.isSuccessful()) {
                     curretGabai = getGabai.getResult().toObject(Gabai.class);
                 }
             });
 
 
-        } else if (kindOfAccount.compareTo(Gabai.GABAI) == 0) {
-            db.collection(Gabai.GABAI).document(EntryMe).get().addOnCompleteListener(getGabai -> {
+        } else if (kindOfAccount.compareTo(getString(R.string.entry_gabai)) == 0) {
+            db.collection(getString(R.string.entry_gabai)).document(EntryMe).get().addOnCompleteListener(getGabai -> {
                 if (getGabai.isSuccessful()) {
                     curretGabai = getGabai.getResult().toObject(Gabai.class);
                 }
             });
 
-            db.collection(Prayer.PRAYER).document(EntryHim).get().addOnCompleteListener(getPrayerTask -> {
+            db.collection(getString(R.string.entry_prayer)).document(EntryHim).get().addOnCompleteListener(getPrayerTask -> {
                 if (getPrayerTask.isSuccessful()) {
                     currentPrayer = getPrayerTask.getResult().toObject(Prayer.class);
                     Log.e("TAG", "onCreate: " + currentPrayer);
@@ -130,10 +130,10 @@ public class ChatActivity extends AppCompatActivity {
         buttonChatSend.setOnClickListener(v -> {
             if (curretGabai != null && currentPrayer != null) {
                 Massage massage = null;
-                if (kindOfAccount.compareTo(Prayer.PRAYER) == 0) {
+                if (kindOfAccount.compareTo(getString(R.string.entry_prayer)) == 0) {
 
                     massage = new Massage(currentPrayer.getEntry(), curretGabai.getEntry(), editTextChatText.getText().toString());
-                } else if (kindOfAccount.compareTo(Gabai.GABAI) == 0) {
+                } else if (kindOfAccount.compareTo(getString(R.string.entry_gabai)) == 0) {
                     massage = new Massage(curretGabai.getEntry(), currentPrayer.getEntry(), editTextChatText.getText().toString());
 
                 }
@@ -170,7 +170,7 @@ public class ChatActivity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull RecyclerAdapterChat.ViewHolder holder, int position) {
 
             holder.textViewItamChatText.setText(massageList.get(position).getText());
-            if (kindOfAccount.compareTo(Prayer.PRAYER) == 0) {
+            if (kindOfAccount.compareTo(getString(R.string.entry_prayer)) == 0) {
                 if (massageList.get(position).getFrom().compareTo(currentPrayer.getEntry()) != 0) {
                     holder.itemView.setBackground(ContextCompat.getDrawable(ChatActivity.this, R.drawable.rounded_corner_blue));
                 } else {
@@ -178,7 +178,7 @@ public class ChatActivity extends AppCompatActivity {
                 }
 
 
-            } else if (kindOfAccount.compareTo(Gabai.GABAI) == 0) {
+            } else if (kindOfAccount.compareTo(getString(R.string.entry_gabai)) == 0) {
                 if (massageList.get(position).getFrom().compareTo(curretGabai.getEntry()) != 0) {
                     holder.itemView.setBackground(ContextCompat.getDrawable(ChatActivity.this, R.drawable.rounded_corner_green));
                 } else {

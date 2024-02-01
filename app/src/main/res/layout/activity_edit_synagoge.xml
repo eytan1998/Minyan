@@ -74,19 +74,23 @@
                 android:id="@+id/spinnerEditSynagogeNosah"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
+                android:layout_marginStart="8dp"
                 android:text="נוסח"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toBottomOf="@+id/textView14"
+                app:layout_constraintStart_toEndOf="@+id/textView14"
+                app:layout_constraintTop_toTopOf="@+id/textView14" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewEditSynagoge"
-                android:layout_width="320dp"
+                android:layout_width="0dp"
                 android:layout_height="300dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 
-                app:layout_constraintStart_toStartOf="@+id/spinnerEditSynagogeNosah"
+                android:layout_marginEnd="8dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView11">
 
             </androidx.recyclerview.widget.RecyclerView>
@@ -120,18 +124,34 @@
 
             <EditText
                 android:id="@+id/editTexttEditSynagogeMoreInfo"
-                android:layout_width="0dp"
+                android:layout_width="367dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="24dp"
                 android:ems="10"
                 android:gravity="start|top"
                 android:hint="עוד פרטים"
                 android:inputType="textMultiLine"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="@+id/spinnerEditSynagogeNosah"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerEditSynagogeNosah" />
+                app:layout_constraintStart_toStartOf="@+id/textView15"
+                app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:text="נוסח:"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="עוד פרטים:"
+                app:layout_constraintStart_toStartOf="@+id/textView14"
+                app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

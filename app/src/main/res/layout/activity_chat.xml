@@ -20,16 +20,16 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewChat"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="24dp"
+
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
         app:layout_constraintBottom_toTopOf="@+id/editTextChatText"
-
         app:layout_constraintEnd_toEndOf="parent"
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
         app:layout_constraintVertical_bias="0.0" />
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
@@ -52,6 +52,7 @@
         android:id="@+id/buttonChatSend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:text="שלח"
         app:layout_constraintBottom_toBottomOf="@+id/editTextChatText"
         app:layout_constraintEnd_toEndOf="parent"

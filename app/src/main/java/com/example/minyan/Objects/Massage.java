@@ -6,18 +6,18 @@ import java.util.Calendar;
 
 public class Massage  implements Comparable<Massage> {
     public final static String MASSAGE = "MASSAGE";
-    String from;
-    String to;
-    Timestamp date;
-    String text;
+    private String from;
+    private String to;
+    private Timestamp date;
+    private String text;
+    private boolean isRead;
 
     public Massage(String from, String to, String text) {
         this.from = from;
         this.to = to;
-        Timestamp timestamp = new com.google.firebase.Timestamp(Calendar.getInstance().getTime());
-        this.date = timestamp;
-
+        this.date = new Timestamp(Calendar.getInstance().getTime());
         this.text = text;
+        this.isRead = false;
     }
 
     public Massage() {
@@ -68,5 +68,13 @@ public class Massage  implements Comparable<Massage> {
                 ", date=" + date +
                 ", text='" + text + '\'' +
                 '}';
+    }
+
+    public boolean isRead() {
+        return isRead;
+    }
+
+    public void setRead(boolean read) {
+        isRead = read;
     }
 }

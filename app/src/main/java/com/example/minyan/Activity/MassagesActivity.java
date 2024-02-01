@@ -5,27 +5,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.minyan.Objects.Gabai;
 import com.example.minyan.Objects.Massage;
-import com.example.minyan.Objects.Pray;
 import com.example.minyan.Objects.Prayer;
-import com.example.minyan.Objects.enums.Kind;
 import com.example.minyan.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -36,6 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class MassagesActivity extends AppCompatActivity {
     String kindOfAccount;
@@ -60,12 +57,14 @@ public class MassagesActivity extends AppCompatActivity {
         assert kindOfAccount != null;
         if (kindOfAccount.compareTo(getString(R.string.entry_prayer)) == 0) {
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            //get the current user (prayer)
             db.collection(getString(R.string.entry_prayer)).document(getString(R.string.entry_prayer) + "|" + Objects.requireNonNull(mAuth.getCurrentUser()).getEmail())
                     .get().addOnCompleteListener(getPrayerTask -> {
                         if (getPrayerTask.isSuccessful()) {
                             currentPrayer = getPrayerTask.getResult().toObject(Prayer.class);
 
-                            db.collection(Massage.MASSAGE).whereEqualTo("from", currentPrayer.getEntry())
+                            //get all massages from this prayer
+                            db.collection(Massage.MASSAGE).whereEqualTo("from", currentPrayer.getEntry(this))
                                     .get().addOnCompleteListener(getMassagesFromME -> {
                                         if (getMassagesFromME.isSuccessful()) {
                                             QuerySnapshot querySnapshot = getMassagesFromME.getResult();
@@ -74,10 +73,8 @@ public class MassagesActivity extends AppCompatActivity {
                                                     massages.add(document.toObject(Massage.class));
 
                                                 }
-
-
-                                                //
-                                                db.collection(Massage.MASSAGE).whereEqualTo("to", currentPrayer.getEntry())
+                                                //get all massages to this prayer
+                                                db.collection(Massage.MASSAGE).whereEqualTo("to", currentPrayer.getEntry(this))
                                                         .get().addOnCompleteListener(getMassagesToME -> {
                                                             if (getMassagesToME.isSuccessful()) {
                                                                 QuerySnapshot querySnapshot1 = getMassagesToME.getResult();
@@ -85,24 +82,25 @@ public class MassagesActivity extends AppCompatActivity {
                                                                     for (QueryDocumentSnapshot document : querySnapshot1) {
                                                                         massages.add(document.toObject(Massage.class));
                                                                     }
-                                                                    Collections.sort(massages);
 
+                                                                    //organize in map so can access
                                                                     for (Massage m : massages) {
                                                                         String entry = "";
-                                                                        if (m.getTo().compareTo(currentPrayer.getEntry()) == 0) {
+                                                                        if (m.getTo().compareTo(currentPrayer.getEntry(this)) == 0) {
                                                                             entry = m.getFrom();
                                                                         } else {
                                                                             entry = m.getTo();
                                                                         }
-                                                                        massagesGroped.computeIfAbsent(entry, k -> new ArrayList<>()).add(m);
-                                                                        recyclerAdapter = new RecyclerAdapterMassages(new ArrayList<>(massagesGroped.entrySet()));
-
-                                                                        recyclerView.setAdapter(recyclerAdapter);
-
-                                                                        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(MassagesActivity.this, DividerItemDecoration.VERTICAL);
-                                                                        recyclerView.addItemDecoration(dividerItemDecoration);
+                                                                        massagesGroped.computeIfAbsent(entry
+                                                                                , k -> new ArrayList<>()).add(m);
 
                                                                     }
+
+                                                                    recyclerAdapter = new RecyclerAdapterMassages(new ArrayList<>(massagesGroped.entrySet()));
+                                                                    recyclerView.setAdapter(recyclerAdapter);
+                                                                    DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(MassagesActivity.this, DividerItemDecoration.VERTICAL);
+                                                                    recyclerView.addItemDecoration(dividerItemDecoration);
+
                                                                 }
                                                             }
                                                         });
@@ -113,14 +111,18 @@ public class MassagesActivity extends AppCompatActivity {
                         }
                     });
 
-        } else if (kindOfAccount.compareTo(getString(R.string.entry_gabai)) == 0) {
+
+            //same just if me is gabai
+        } else if (kindOfAccount.equals(getString(R.string.entry_gabai))) {
+            //get the user (gabai)
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
             db.collection(getString(R.string.entry_gabai)).document(getString(R.string.entry_gabai) + "|" + Objects.requireNonNull(mAuth.getCurrentUser()).getEmail())
                     .get().addOnCompleteListener(getGabaiTask -> {
                         if (getGabaiTask.isSuccessful()) {
                             currentGabai = getGabaiTask.getResult().toObject(Gabai.class);
 
-                            db.collection(Massage.MASSAGE).whereEqualTo("from", currentGabai.getEntry())
+                            //get all massage to user from user
+                            db.collection(Massage.MASSAGE).whereEqualTo("from", currentGabai.getEntry(this))
                                     .get().addOnCompleteListener(getMassagesFromME -> {
                                         if (getMassagesFromME.isSuccessful()) {
                                             QuerySnapshot querySnapshot = getMassagesFromME.getResult();
@@ -129,10 +131,8 @@ public class MassagesActivity extends AppCompatActivity {
                                                     massages.add(document.toObject(Massage.class));
 
                                                 }
-
-
-                                                //
-                                                db.collection(Massage.MASSAGE).whereEqualTo("to", currentGabai.getEntry())
+                                                //get all massage to user to user
+                                                db.collection(Massage.MASSAGE).whereEqualTo("to", currentGabai.getEntry(this))
                                                         .get().addOnCompleteListener(getMassagesToME -> {
                                                             if (getMassagesToME.isSuccessful()) {
                                                                 QuerySnapshot querySnapshot1 = getMassagesToME.getResult();
@@ -140,24 +140,22 @@ public class MassagesActivity extends AppCompatActivity {
                                                                     for (QueryDocumentSnapshot document : querySnapshot1) {
                                                                         massages.add(document.toObject(Massage.class));
                                                                     }
-                                                                    Collections.sort(massages);
 
                                                                     for (Massage m : massages) {
                                                                         String entry = "";
-                                                                        if (m.getTo().compareTo(currentGabai.getEntry()) == 0) {
+                                                                        if (m.getTo().equals(currentGabai.getEntry(this))) {
                                                                             entry = m.getFrom();
                                                                         } else {
                                                                             entry = m.getTo();
                                                                         }
                                                                         massagesGroped.computeIfAbsent(entry, k -> new ArrayList<>()).add(m);
-                                                                        recyclerAdapter = new RecyclerAdapterMassages(new ArrayList<>(massagesGroped.entrySet()));
-
-                                                                        recyclerView.setAdapter(recyclerAdapter);
-
-                                                                        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(MassagesActivity.this, DividerItemDecoration.VERTICAL);
-                                                                        recyclerView.addItemDecoration(dividerItemDecoration);
-
                                                                     }
+
+                                                                    recyclerAdapter = new RecyclerAdapterMassages(new ArrayList<>(massagesGroped.entrySet()));
+                                                                    recyclerView.setAdapter(recyclerAdapter);
+                                                                    DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(MassagesActivity.this, DividerItemDecoration.VERTICAL);
+                                                                    recyclerView.addItemDecoration(dividerItemDecoration);
+
                                                                 }
                                                             }
                                                         });
@@ -192,9 +190,29 @@ public class MassagesActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerAdapterMassages.ViewHolder holder, int position) {
-
-            holder.TextViewlist_iteam.setText(listMap.get(position).getKey());
             holder.Buttonlist_prayDel.setVisibility(View.INVISIBLE);
+
+            int count = (int) listMap.get(position).getValue().stream().filter(m-> m.getFrom().equals(listMap.get(position).getKey())).filter(m -> !m.isRead()).count();
+
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            if (kindOfAccount.equals(getString(R.string.entry_prayer))) {
+                db.collection(getString(R.string.entry_gabai)).document(listMap.get(position).getKey())
+                        .get()
+                        .addOnCompleteListener(task -> {
+                            String name = Objects.requireNonNull(task.getResult().toObject(Gabai.class)).getName();
+                            holder.TextViewlist_iteam.setText("שם: " + name + "\nמספר הודעות שלא נקראו: " + count+"\n");
+
+                        });
+            } else if (kindOfAccount.equals(getString(R.string.entry_gabai))) {
+                db.collection(getString(R.string.entry_prayer)).document(listMap.get(position).getKey())
+                        .get()
+                        .addOnCompleteListener(task -> {
+                            String name = Objects.requireNonNull(task.getResult().toObject(Prayer.class)).getName();
+                            holder.TextViewlist_iteam.setText("שם: " + name + "\nמספר הודעות שלא נקראו: " + count+"\n");
+
+                        });
+
+            }
 
 
         }
@@ -223,10 +241,10 @@ public class MassagesActivity extends AppCompatActivity {
                 itemView.setOnClickListener(v -> {
                     Intent intent = new Intent(MassagesActivity.this, ChatActivity.class);
                     if (kindOfAccount.compareTo(getString(R.string.entry_prayer)) == 0) {
-                        intent.putExtra(getString(R.string.me), currentPrayer.getEntry());
+                        intent.putExtra(getString(R.string.me), currentPrayer.getEntry(MassagesActivity.this));
 
                     } else if (kindOfAccount.compareTo(getString(R.string.entry_gabai)) == 0) {
-                        intent.putExtra(getString(R.string.me), currentGabai.getEntry());
+                        intent.putExtra(getString(R.string.me), currentGabai.getEntry(MassagesActivity.this));
                     }
                     intent.putExtra(getString(R.string.him), listMap.get(getAdapterPosition()).getKey());
                     intent.putExtra(getString(R.string.kind), kindOfAccount);

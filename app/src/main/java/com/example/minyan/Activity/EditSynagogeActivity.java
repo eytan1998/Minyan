@@ -202,9 +202,14 @@ public class EditSynagogeActivity extends AppCompatActivity {
 
                     currentSynagoge.addPray(p);
                     prays.add(p);
+                    if(recyclerAdapter == null){
+                        recyclerAdapter = new RecyclerAdapterPray(prays);
+                        recyclerView.setAdapter(recyclerAdapter);
+                        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(EditSynagogeActivity.this, DividerItemDecoration.VERTICAL);
+                        recyclerView.addItemDecoration(dividerItemDecoration);
+                    }
                     recyclerAdapter.notifyItemInserted(recyclerAdapter.getItemCount());
 
-                    //todo java.lang.NullPointerException: Attempt to invoke virtual method 'int com.example.minyan.Activity.EditSynagogeActivity$RecyclerAdapterPray.getItemCount()' on a null object reference
                 }
 
 
@@ -215,8 +220,8 @@ public class EditSynagogeActivity extends AppCompatActivity {
             });
             buttonEditPrayTime.setOnClickListener(v -> {
                 TimePickerDialog timePickerDialog = new TimePickerDialog(EditSynagogeActivity.this, (view, hourOfDay, minute) -> buttonEditPrayTime.setText(String.format("%02d:%02d", hourOfDay, minute)),
-                       Integer.parseInt(buttonEditPrayTime.getText().toString().split(":")[0]),
-                       Integer.parseInt(buttonEditPrayTime.getText().toString().split(":")[1]),
+                        Integer.parseInt(buttonEditPrayTime.getText().toString().split(":")[0]),
+                        Integer.parseInt(buttonEditPrayTime.getText().toString().split(":")[1]),
 
                         true);
                 timePickerDialog.show();

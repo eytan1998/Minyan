@@ -1,5 +1,6 @@
 package com.example.minyan.Objects;
 
+import android.content.Context;
 import android.media.Image;
 
 import com.example.minyan.Objects.relations.FavoriteSynagoge;
@@ -107,8 +108,8 @@ public class Prayer  {
     public void setImage(Image image) {
         this.image = image;
     }
-    public String getEntry() {
-        return R.string.entry_prayer + "|" +this.email;
+    public String getEntry(Context context) {
+        return context.getString(R.string.entry_prayer) + "|" +this.email;
     }
 
     @Override

@@ -1,19 +1,12 @@
 package com.example.minyan.Objects;
 
+import android.content.Context;
 import android.media.Image;
-
-import androidx.annotation.NonNull;
 
 import com.example.minyan.Objects.relations.OwnSynagoge;
 import com.example.minyan.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.Objects;
 
 public class Gabai {
     String email;
@@ -32,11 +25,11 @@ public class Gabai {
         this.name = name;
         this.email = email;
         this.phone = phone;
-        this.isVerified = false; //cant acsses gabai rigth without admin verify
+        this.isVerified = false; //cant access gabai right without admin verify
 
     }
 
-    public void delSynagoge(Synagoge synagoge) {
+    public void delSynagogue(Synagoge synagoge) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(Synagoge.SYNAGOGE).document(synagoge.getS_id()).delete();
         db.collection(OwnSynagoge.OWN_SYNAGOGE).whereEqualTo("s_id", synagoge.getS_id())
@@ -53,7 +46,7 @@ public class Gabai {
                 });
     }
 
-    public String addSynagoge(Synagoge synagoge) {
+    public String addSynagogue(Synagoge synagoge) {
         //todo if failed
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(Synagoge.SYNAGOGE).document(synagoge.getS_id()).set(synagoge);
@@ -110,8 +103,8 @@ public class Gabai {
         this.quote = quote;
     }
 
-    public String getEntry() {
-        return R.string.entry_gabai+ "|" +this.email;
+    public String getEntry(Context context) {
+        return context.getString(R.string.entry_gabai)+ "|" +this.email;
     }
 }
 

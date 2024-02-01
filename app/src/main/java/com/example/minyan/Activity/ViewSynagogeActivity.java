@@ -132,7 +132,7 @@ public class ViewSynagogeActivity extends AppCompatActivity {
                                             if (task.isSuccessful()) {
                                                 QuerySnapshot querySnapshot = task.getResult();
                                                 if (querySnapshot != null && !querySnapshot.isEmpty()) {
-                                                    buttonViewSYnagogeLike.setBackgroundResource(R.drawable.ic_is_like);
+                                                    buttonViewSYnagogeLike.setBackgroundResource(R.drawable.ic_like);
                                                     isLike = true;
                                                 }
                                             }
@@ -217,7 +217,7 @@ public class ViewSynagogeActivity extends AppCompatActivity {
                     textViewViewSYnagogeLike.setText(String.valueOf(Integer.parseInt(textViewViewSYnagogeLike.getText().toString()) - 1));
 
                 } else {
-                    buttonViewSYnagogeLike.setBackgroundResource(R.drawable.ic_is_like);
+                    buttonViewSYnagogeLike.setBackgroundResource(R.drawable.ic_like);
                     currentPrayer.likeSynagogue(currentSynagoge);
                     isLike = true;
                     textViewViewSYnagogeLike.setText(String.valueOf(Integer.parseInt(textViewViewSYnagogeLike.getText().toString()) + 1));
@@ -264,7 +264,16 @@ public class ViewSynagogeActivity extends AppCompatActivity {
                 //get gabai
                 Massage massage = null;
                 if (curretGabai != null && currentPrayer != null) {
-                    massage = new Massage(currentPrayer.getEntry(), curretGabai.getEntry(), editTextSendMassageText.getText().toString());
+                    if(curretGabai.getEmail().equals(currentPrayer.getEmail())){
+                        Toast.makeText(ViewSynagogeActivity.this, "אין סיבה לשלוח הודעה לעצמך", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if(editTextSendMassageText.getText().toString().isEmpty()){
+                        Toast.makeText(ViewSynagogeActivity.this, "לא לשלוח הודעה ריקה", Toast.LENGTH_SHORT).show();
+
+                        return;
+                    }
+                    massage = new Massage(currentPrayer.getEntry(ViewSynagogeActivity.this), curretGabai.getEntry(ViewSynagogeActivity.this), editTextSendMassageText.getText().toString());
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                     db.collection(Massage.MASSAGE).add(massage);
                 }

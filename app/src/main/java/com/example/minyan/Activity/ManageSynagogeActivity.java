@@ -86,7 +86,7 @@ public class ManageSynagogeActivity extends AppCompatActivity implements OnMapRe
             if (mMap != null) {
                 //add synagoge
                 Synagoge synagoge = new Synagoge(EditTextManageSynagogeName.getText().toString(), Nosah.ALL, centerOfMap.latitude, centerOfMap.longitude, getAddressFromLocation(ManageSynagogeActivity.this, centerOfMap.latitude, centerOfMap.longitude));
-                String s_id = currentGabai.addSynagoge(synagoge);
+                String s_id = currentGabai.addSynagogue(synagoge);
 
                 //add marker
                 MarkerOptions markerOptions = new MarkerOptions()
@@ -105,7 +105,7 @@ public class ManageSynagogeActivity extends AppCompatActivity implements OnMapRe
             //todo ask with dialog
             if (mMap != null) {
                 if (currentSynagoge != null) {
-                    currentGabai.delSynagoge(currentSynagoge);
+                    currentGabai.delSynagogue(currentSynagoge);
                     currentMarker.remove();
                     EditTextManageSynagogeName.setText("");
                     currentSynagoge = null;

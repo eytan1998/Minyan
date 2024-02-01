@@ -77,12 +77,9 @@ public class ChatActivity extends AppCompatActivity {
             db.collection(getString(R.string.entry_prayer)).document(EntryHim).get().addOnCompleteListener(getPrayerTask -> {
                 if (getPrayerTask.isSuccessful()) {
                     currentPrayer = getPrayerTask.getResult().toObject(Prayer.class);
-                    Log.e("TAG", "onCreate: " + currentPrayer);
                 }
-                Log.e("TAG", "onCreate: " + currentPrayer);
 
             });
-            Log.e("TAG", "onCreate: " + currentPrayer);
 
         }
 
@@ -104,7 +101,10 @@ public class ChatActivity extends AppCompatActivity {
                                             QuerySnapshot querySnapshot1 = getMassagesToME.getResult();
                                             if (querySnapshot1 != null) {
                                                 for (QueryDocumentSnapshot document : querySnapshot1) {
-                                                    massages.add(document.toObject(Massage.class));
+                                                    Massage m = document.toObject(Massage.class);
+                                                    massages.add(m);
+                                                    m.setRead(true);
+                                                    db.collection(Massage.MASSAGE).document(document.getId()).set(m);
                                                 }
 
                                                 Collections.sort(massages);
@@ -132,9 +132,9 @@ public class ChatActivity extends AppCompatActivity {
                 Massage massage = null;
                 if (kindOfAccount.compareTo(getString(R.string.entry_prayer)) == 0) {
 
-                    massage = new Massage(currentPrayer.getEntry(), curretGabai.getEntry(), editTextChatText.getText().toString());
+                    massage = new Massage(currentPrayer.getEntry(this), curretGabai.getEntry(this), editTextChatText.getText().toString());
                 } else if (kindOfAccount.compareTo(getString(R.string.entry_gabai)) == 0) {
-                    massage = new Massage(curretGabai.getEntry(), currentPrayer.getEntry(), editTextChatText.getText().toString());
+                    massage = new Massage(curretGabai.getEntry(this), currentPrayer.getEntry(this), editTextChatText.getText().toString());
 
                 }
                 assert massage != null;
@@ -171,7 +171,7 @@ public class ChatActivity extends AppCompatActivity {
 
             holder.textViewItamChatText.setText(massageList.get(position).getText());
             if (kindOfAccount.compareTo(getString(R.string.entry_prayer)) == 0) {
-                if (massageList.get(position).getFrom().compareTo(currentPrayer.getEntry()) != 0) {
+                if (massageList.get(position).getFrom().compareTo(currentPrayer.getEntry(ChatActivity.this)) != 0) {
                     holder.itemView.setBackground(ContextCompat.getDrawable(ChatActivity.this, R.drawable.rounded_corner_blue));
                 } else {
                     holder.itemView.setBackground(ContextCompat.getDrawable(ChatActivity.this, R.drawable.rounded_corner_green));
@@ -179,7 +179,7 @@ public class ChatActivity extends AppCompatActivity {
 
 
             } else if (kindOfAccount.compareTo(getString(R.string.entry_gabai)) == 0) {
-                if (massageList.get(position).getFrom().compareTo(curretGabai.getEntry()) != 0) {
+                if (massageList.get(position).getFrom().compareTo(curretGabai.getEntry(ChatActivity.this)) != 0) {
                     holder.itemView.setBackground(ContextCompat.getDrawable(ChatActivity.this, R.drawable.rounded_corner_green));
                 } else {
                     holder.itemView.setBackground(ContextCompat.getDrawable(ChatActivity.this, R.drawable.rounded_corner_blue));

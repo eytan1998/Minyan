@@ -1,13 +1,20 @@
 package com.example.minyan.Activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +36,13 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +53,12 @@ public class EditSynagogeActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerAdapterPray recyclerAdapter;
     private final List<Pray> prays = new ArrayList<>();
+
+    FirebaseStorage storage;
+    StorageReference storageReference;
+    private final int PICK_IMAGE_REQUEST = 71;
+    ImageView imageAddPhotoImage;
+    private Uri filePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +87,8 @@ public class EditSynagogeActivity extends AppCompatActivity {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection(Synagoge.SYNAGOGE).document(s_id);
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
         docRef.get().addOnCompleteListener(getSynagogeTask -> {
             if (getSynagogeTask.isSuccessful()) {
@@ -77,6 +98,10 @@ public class EditSynagogeActivity extends AppCompatActivity {
                 TextViewEditSynagogeAdress.setText(currentSynagoge.getAddress());
                 editTexttEditSynagogeMoreInfo.setText(currentSynagoge.getMore_detail());
 
+                //try get image
+
+                storageReference.child("SYNAGOGUE_IMAGE").child(currentSynagoge.getS_id()).getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri)
+                        .placeholder(R.drawable.place_holder).into(imageViewEditSnagogeImage));
                 //get all prays_id
                 db.collection(PrayInSynagoge.PRAY_IN_SYNAGOGE).whereEqualTo("s_id", currentSynagoge.getS_id())
                         .get().addOnCompleteListener(getS_idTask -> {
@@ -114,8 +139,6 @@ public class EditSynagogeActivity extends AppCompatActivity {
 
                         });
 
-                //todo image
-
 
             }
         });
@@ -130,7 +153,6 @@ public class EditSynagogeActivity extends AppCompatActivity {
                 docRef.set(currentSynagoge).addOnCompleteListener(task -> {
                     Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show();
                 });
-                //todo setimage not here
 
             }
         });
@@ -139,6 +161,10 @@ public class EditSynagogeActivity extends AppCompatActivity {
             currentPray = null;
             EditPrayDialog editPrayDialog = new EditPrayDialog();
             editPrayDialog.show();
+        });
+        buttonEditSynagogeEditImage.setOnClickListener(v -> {
+            addPhotoDialog addPhotoDialog = new addPhotoDialog();
+            addPhotoDialog.show();
         });
 
 
@@ -202,7 +228,7 @@ public class EditSynagogeActivity extends AppCompatActivity {
 
                     currentSynagoge.addPray(p);
                     prays.add(p);
-                    if(recyclerAdapter == null){
+                    if (recyclerAdapter == null) {
                         recyclerAdapter = new RecyclerAdapterPray(prays);
                         recyclerView.setAdapter(recyclerAdapter);
                         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(EditSynagogeActivity.this, DividerItemDecoration.VERTICAL);
@@ -302,4 +328,113 @@ public class EditSynagogeActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * =========================addPhotoDialog==================================
+     */
+
+    public class addPhotoDialog extends Dialog {
+
+        float rotateImage = 0;
+
+        public addPhotoDialog() {
+            super(EditSynagogeActivity.this);
+        }
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.dialog_add_photo);
+
+            Button buttonAddPhotoChoose = findViewById(R.id.buttonAddPhotoChoose);
+            Button buttonAddPhotoUpload = findViewById(R.id.buttonAddPhotoUpload);
+            Button buttonAddPhotoRoatet = findViewById(R.id.buttonAddPhotoRoatet);
+            Button buttonAddPhotoExit = findViewById(R.id.buttonAddPhotoExit);
+            imageAddPhotoImage = findViewById(R.id.imageAddPhotoImage);
+
+
+            buttonAddPhotoRoatet.setOnClickListener(v -> {
+                rotateImage += 90;
+                imageAddPhotoImage.setRotation(rotateImage);
+                if (rotateImage == 360) {
+                    rotateImage = 0;
+                }
+            });
+            buttonAddPhotoChoose.setOnClickListener(v -> {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+            });
+            buttonAddPhotoUpload.setOnClickListener(v -> uploadImage());
+            buttonAddPhotoExit.setOnClickListener(v -> this.dismiss());
+        }
+
+
+        private void uploadImage() {
+            if (filePath != null) {
+                final ProgressDialog progressDialog = new ProgressDialog(getContext());
+                progressDialog.setTitle("מעלה...");
+                progressDialog.show();
+
+
+                StorageReference ref = storageReference.child("SYNAGOGUE_IMAGE").child(currentSynagoge.getS_id());
+                Bitmap bitmap = null;
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), filePath);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                //Compress the original bitmap down into a JPEG.
+                bitmap = RotateBitmap(bitmap, rotateImage);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+                byte[] data2 = baos.toByteArray();
+
+
+                UploadTask uploadTask = ref.putBytes(data2);
+                uploadTask.addOnSuccessListener(taskSnapshot -> {
+                            progressDialog.dismiss();
+                            Toast.makeText(getContext(), "תמונה הועלתה", Toast.LENGTH_SHORT).show();
+
+                        })
+                        .addOnFailureListener(e -> {
+                            progressDialog.dismiss();
+                            Toast.makeText(getContext(), "נכשל " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        })
+                        .addOnProgressListener(taskSnapshot -> {
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
+                                    .getTotalByteCount());
+                            progressDialog.setMessage("עלה " + (int) progress + "%");
+                        });
+
+
+            }
+
+        }
+
+        private Bitmap RotateBitmap(Bitmap source, float angle) {
+            Matrix matrix = new Matrix();
+            matrix.postRotate(angle);
+            return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
+            filePath = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                imageAddPhotoImage.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
+
+

@@ -86,6 +86,8 @@ public class ProfilePrayerActivity extends AppCompatActivity {
             super(ProfilePrayerActivity.this);
         }
 
+
+
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);

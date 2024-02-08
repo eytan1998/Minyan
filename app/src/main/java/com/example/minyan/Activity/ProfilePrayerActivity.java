@@ -2,12 +2,14 @@ package com.example.minyan.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.minyan.Objects.Gabai;
 import com.example.minyan.Objects.Prayer;
@@ -31,6 +33,8 @@ public class ProfilePrayerActivity extends AppCompatActivity {
         TextView textViewProfilePrayerName = findViewById(R.id.textViewProfilePrayerName);
         TextView textViewProfilePrayerQoute = findViewById(R.id.textViewProfilePrayerQoute);
 
+
+        Button buttonProfilePrayerToGabai = findViewById(R.id.buttonProfilePrayerToGabai);
         Button buttonProfilePrayerFindSynagoe = findViewById(R.id.buttonProfilePrayerFindSynagoe);
         Button buttonProfilePrayerMassages = findViewById(R.id.buttonProfilePrayerMassages);
         Button buttonProfilePrayerFavorite = findViewById(R.id.buttonProfilePrayerFavorite);
@@ -48,10 +52,17 @@ public class ProfilePrayerActivity extends AppCompatActivity {
                     }
                 });
 
+
         buttonProfilePrayerFindSynagoe.setOnClickListener(v -> {
             Intent intent = new Intent(ProfilePrayerActivity.this, FindSynagogueActivity.class);
             startActivity(intent);
         });
+
+        buttonProfilePrayerToGabai.setOnClickListener(v -> {
+            ChaneToGabaiDialog chanetogabaidialog = new ChaneToGabaiDialog();
+            chanetogabaidialog.show();
+        });
+
         buttonProfilePrayerMassages.setOnClickListener(v -> {
             Intent intent = new Intent(ProfilePrayerActivity.this, MassagesActivity.class);
             intent.putExtra(getString(R.string.kind), getString(R.string.entry_prayer));
@@ -62,5 +73,59 @@ public class ProfilePrayerActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+
     }
+
+    /**
+     * =========================EditPrayDialog==================================
+     */
+    private class ChaneToGabaiDialog extends Dialog {
+
+
+        public ChaneToGabaiDialog() {
+            super(ProfilePrayerActivity.this);
+        }
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.dialog_change_to_gabai);
+
+            EditText editTexttToGabaiPhone = findViewById(R.id.editTexttToGabaiPhone);
+            Button buttonToGabaiexit = findViewById(R.id.buttonToGabaiexit);
+            Button buttonToGabaisend = findViewById(R.id.buttonToGabaisend);
+
+
+            buttonToGabaisend.setOnClickListener(v -> {
+                //get gabai
+                if (editTexttToGabaiPhone.getText().toString().isEmpty()) {
+                    Toast.makeText(ProfilePrayerActivity.this, R.string.one_or_more_is_empty, Toast.LENGTH_LONG).show();
+                }
+                    else if (currentPrayer != null) {
+
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    Gabai gabai = new Gabai(
+                            currentPrayer.getName(),
+                            currentPrayer.getEmail(),
+                            editTexttToGabaiPhone.getText().toString()
+
+                    );
+                    db.collection(getString(R.string.entry_gabai)).document(getString(R.string.entry_gabai) + "|" + Objects.requireNonNull(currentPrayer).getEmail()).set(gabai);
+
+
+                Toast.makeText(ProfilePrayerActivity.this, "הבקשה נשלחה", Toast.LENGTH_SHORT).show();
+                dismiss();
+                    }
+                else{
+                    Toast.makeText(ProfilePrayerActivity.this, "שגיאה", Toast.LENGTH_LONG).show();
+                }
+            });
+
+            buttonToGabaiexit.setOnClickListener(v -> dismiss());
+
+
+        }
+
+    }
+
 }

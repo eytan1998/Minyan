@@ -6,16 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".Activity.ProfilePrayerActivity">
 
+
+
     <ImageView
         android:id="@+id/imageViewProfilePrayerProfile"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/profile"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.07"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -69,10 +71,26 @@
 
     <Button
         android:id="@+id/buttonProfilePrayerToGabai"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="117dp"
+        android:layout_height="37dp"
+        android:layout_marginBottom="16dp"
+        android:text="הירשם כגבאי"
+        android:textSize="15sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.394"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="24dp"
+        android:text="מעוניין להיות גבאי?"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/buttonProfilePrayerToGabai" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

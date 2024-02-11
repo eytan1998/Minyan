@@ -15,6 +15,7 @@ import com.example.minyan.Objects.Gabai;
 import com.example.minyan.Objects.Prayer;
 import com.example.minyan.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
@@ -59,9 +60,23 @@ public class ProfilePrayerActivity extends AppCompatActivity {
         });
 
         buttonProfilePrayerToGabai.setOnClickListener(v -> {
-            ChaneToGabaiDialog chanetogabaidialog = new ChaneToGabaiDialog();
-            chanetogabaidialog.show();
-        });
+                    db.collection(getString(R.string.entry_gabai))
+                            .whereEqualTo("email", currentPrayer.getEmail())
+                            .get()
+                            .addOnSuccessListener(queryDocumentSnapshots -> {
+                                if (queryDocumentSnapshots.isEmpty()) {
+                                    ChaneToGabaiDialog chanetogabaidialog = new ChaneToGabaiDialog();
+                                    chanetogabaidialog.show();
+                                    }
+                                 else {
+
+                                Toast.makeText(this, "אתה כבר גבאי", Toast.LENGTH_LONG).show();}
+                            })
+                            .addOnFailureListener(e -> {
+/////////////////////////////////////////////////////////////////////////////
+                            });
+                }
+                );
 
         buttonProfilePrayerMassages.setOnClickListener(v -> {
             Intent intent = new Intent(ProfilePrayerActivity.this, MassagesActivity.class);

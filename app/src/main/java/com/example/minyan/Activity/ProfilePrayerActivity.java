@@ -1,10 +1,12 @@
 package com.example.minyan.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -59,6 +61,7 @@ public class ProfilePrayerActivity extends AppCompatActivity {
         Button buttonProfilePrayerFindSynagoe = findViewById(R.id.buttonProfilePrayerFindSynagoe);
         Button buttonProfilePrayerMassages = findViewById(R.id.buttonProfilePrayerMassages);
         Button buttonProfilePrayerFavorite = findViewById(R.id.buttonProfilePrayerFavorite);
+        Button buttonProfilePrayerChangePassword = findViewById(R.id.buttonProfilePrayerChangePassword);
         FloatingActionButton buttonProfilePrayerEditImage = findViewById(R.id.buttonProfilePrayerEditImage);
 
         storage = FirebaseStorage.getInstance();
@@ -102,6 +105,11 @@ public class ProfilePrayerActivity extends AppCompatActivity {
                             });
                 }
         );
+
+        buttonProfilePrayerChangePassword.setOnClickListener(v -> {
+            ChangePasswordDialog changePasswordDialog = new ChangePasswordDialog(ProfilePrayerActivity.this);
+            changePasswordDialog.show();
+        });
 
         buttonProfilePrayerMassages.setOnClickListener(v -> {
             Intent intent = new Intent(ProfilePrayerActivity.this, MassagesActivity.class);
@@ -277,6 +285,59 @@ public class ProfilePrayerActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+    /**
+     * =========================changePasswordDialog==================================
+     */
+
+    private static class ChangePasswordDialog extends Dialog {
+
+
+        public ChangePasswordDialog(@NonNull Context context) {
+            super(context);
+        }
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.dialog_change_password);
+
+            EditText editTextChangePasswordNew = findViewById(R.id.editTextChangePasswordNew);
+            EditText editTextChangePasswordConfirm = findViewById(R.id.editTextChangePasswordConfirm);
+
+            Button buttonChangePasswordSend = findViewById(R.id.buttonChangePasswordSend);
+            Button buttonChangePasswordCancel = findViewById(R.id.buttonChangePasswordCancel);
+
+            buttonChangePasswordSend.setOnClickListener(v -> {
+                String newPassword = editTextChangePasswordNew.getText().toString().trim();
+                String confirmPassword = editTextChangePasswordConfirm.getText().toString().trim();
+
+                if (newPassword.isEmpty() || confirmPassword.isEmpty()) {
+                    Toast.makeText(getContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!newPassword.equals(confirmPassword)) {
+                    Toast.makeText(getContext(), "New passwords do not match", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Update password using FirebaseAuth
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user != null) {
+                    user.updatePassword(newPassword)
+                            .addOnSuccessListener(aVoid -> {
+                                Toast.makeText(getContext(), "Password updated successfully", Toast.LENGTH_SHORT).show();
+                                dismiss();
+                            })
+                            .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to update password: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                } else {
+                    Toast.makeText(getContext(), "User is not authenticated", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            buttonChangePasswordCancel.setOnClickListener(v -> dismiss());
         }
     }
 

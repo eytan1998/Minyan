@@ -15,7 +15,6 @@ public class Gabai {
     String phone;
 
     boolean isVerified;
-    Image image;
     String quote;
 
     public Gabai() {
@@ -87,13 +86,6 @@ public class Gabai {
         isVerified = verified;
     }
 
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
-    }
 
     public String getQuote() {
         return quote;

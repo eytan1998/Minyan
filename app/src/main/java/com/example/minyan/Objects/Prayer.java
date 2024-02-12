@@ -16,8 +16,6 @@ public class Prayer  {
     String name;
     String email;
     String quote;
-    Image image;
-
     public Prayer() {
     }
 
@@ -101,13 +99,6 @@ public class Prayer  {
         this.quote = quote;
     }
 
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
-    }
     public String getEntry(Context context) {
         return context.getString(R.string.entry_prayer) + "|" +this.email;
     }

@@ -6,15 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".Activity.ProfileGabiActivity">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/buttonProfileGabaiEditImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewProfileGabiProfile"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewProfileGabiProfile"
+        app:layout_constraintStart_toEndOf="@+id/imageViewProfileGabiProfile"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewProfileGabiProfile"
+        app:srcCompat="@drawable/ic_edit" />
+
     <TextView
         android:id="@+id/textViewProfileGabaiName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageViewProfileGabiProfile"
         app:layout_constraintStart_toEndOf="@+id/imageViewProfileGabiProfile"
-        app:layout_constraintTop_toTopOf="@+id/imageViewProfileGabiProfile" />
+        app:layout_constraintTop_toTopOf="@+id/imageViewProfileGabiProfile"
+        app:layout_constraintVertical_bias="0.7" />
 
     <ImageView
         android:id="@+id/imageViewProfileGabiProfile"
@@ -23,11 +38,12 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/profile"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.07"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/profile" />
 
     <Button
         android:id="@+id/buttonProfileGabiManageSynagoe"
@@ -44,6 +60,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/imageViewProfileGabiProfile"
         app:layout_constraintTop_toBottomOf="@+id/imageViewProfileGabiProfile" />
 
@@ -56,4 +75,15 @@
         app:layout_constraintEnd_toEndOf="@+id/buttonProfileGabiManageSynagoe"
         app:layout_constraintStart_toStartOf="@+id/buttonProfileGabiManageSynagoe"
         app:layout_constraintTop_toBottomOf="@+id/buttonProfileGabiManageSynagoe" />
+
+    <Button
+        android:id="@+id/buttonProfileGabiChangePassward"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="החלפת סיסמא"
+        app:layout_constraintEnd_toEndOf="@+id/buttonProfileGabiMassages"
+        app:layout_constraintStart_toStartOf="@+id/buttonProfileGabiMassages"
+        app:layout_constraintTop_toBottomOf="@+id/buttonProfileGabiMassages" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

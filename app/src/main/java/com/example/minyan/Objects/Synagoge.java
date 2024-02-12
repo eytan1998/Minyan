@@ -25,7 +25,6 @@ public class Synagoge {
     private String  address;
     private double lat;
     private double lng;
-    private String pdf_id;
     private String more_detail;
 
 
@@ -129,14 +128,6 @@ public class Synagoge {
 
     public void setLng(double lng) {
         this.lng = lng;
-    }
-
-    public String getPdf_id() {
-        return pdf_id;
-    }
-
-    public void setPdf_id(String pdf_id) {
-        this.pdf_id = pdf_id;
     }
 
     public String getMore_detail() {

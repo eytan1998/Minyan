@@ -76,7 +76,7 @@ public class ProfileGabiActivity extends AppCompatActivity {
 
                         //try get image
                         storageReference.child("PROFILE_IMAGE").child(currentGabai.getEmail()).getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri)
-                                .placeholder(R.drawable.profile).into(imageViewProfileGabiProfile));
+                                .placeholder(R.drawable.avater).into(imageViewProfileGabiProfile));
                     }
                 });
 

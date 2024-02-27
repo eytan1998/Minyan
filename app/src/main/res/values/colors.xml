@@ -7,11 +7,11 @@
     <color name="blue">#A4B2FF</color>
 
     <color name="background">#f9fcfb</color>
-    <color name="my_light_primary">#5e576f</color>
+    <color name="my_light_primary">#632f3f</color>
     <color name="my_light_accent">#eeebb0</color>
 
-    <color name="my_dark_accent">#bd5b51</color>
-    <color name="my_dark_primary">#632f3f</color>
+    <color name="my_dark_accent">#632f3f</color>
+    <color name="my_dark_primary">#bd5b51</color>
 
     <color name="app_color">#7ab5a5</color>
 

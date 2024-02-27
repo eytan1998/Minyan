@@ -6,56 +6,56 @@
     android:layout_height="match_parent"
     tools:context=".Activity.ManageSynagogeActivity">
 
-    <Button
-        android:id="@+id/buttonManageSynagogeSave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:text="שמור בית כנסת"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/EditTextManageSynagogeName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:ems="10"
-        android:hint="שם בית כנסת"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mapManageSynagoge" />
-
     <fragment
         android:id="@+id/mapManageSynagoge"
         class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/buttonManageSynagogeEdit"
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/groupManageSynagogue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ערוך בית כנסת"
-        app:layout_constraintBottom_toTopOf="@+id/buttonManageSynagogeSave"
-        app:layout_constraintEnd_toEndOf="@+id/buttonManageSynagogeSave"
-        app:layout_constraintStart_toStartOf="@+id/buttonManageSynagogeSave" />
+        android:visibility="invisible"
+        app:constraint_referenced_ids="buttonManageSynagogueSetLocation,buttonManageSynagogueExit" />
 
     <Button
-        android:id="@+id/buttonManageSynagogeDelete"
+        android:id="@+id/buttonManageSynagogueAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="מחק בית כנסת"
-        app:layout_constraintBottom_toTopOf="@+id/buttonManageSynagogeEdit"
-        app:layout_constraintEnd_toEndOf="@+id/buttonManageSynagogeEdit"
-        app:layout_constraintStart_toStartOf="@+id/buttonManageSynagogeEdit" />
+        android:layout_marginBottom="16dp"
+        android:text="הוסף בית כנסת"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/buttonManageSynagogueSetLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="הגדר מיקום"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/buttonManageSynagogueExit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:scaleX="0.9"
+        android:scaleY="0.9"
+        android:src="@android:drawable/ic_menu_close_clear_cancel"
+        app:backgroundTint="@color/my_light_primary"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonManageSynagogueSetLocation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/buttonManageSynagogueSetLocation"
+        app:layout_constraintTop_toTopOf="@+id/buttonManageSynagogueSetLocation" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

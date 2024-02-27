@@ -32,6 +32,10 @@
             android:screenOrientation="portrait"
             android:exported="false" />
         <activity
+            android:name=".Activity.FindMinyanActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
+        <activity
             android:name=".Activity.ProfilePrayerActivity"
             android:screenOrientation="portrait"
             android:exported="false" />

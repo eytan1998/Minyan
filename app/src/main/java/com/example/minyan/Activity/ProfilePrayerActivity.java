@@ -59,6 +59,7 @@ public class ProfilePrayerActivity extends AppCompatActivity {
 
         Button buttonProfilePrayerToGabai = findViewById(R.id.buttonProfilePrayerToGabai);
         Button buttonProfilePrayerFindSynagoe = findViewById(R.id.buttonProfilePrayerFindSynagoe);
+        Button buttonProfilePrayerFindPray = findViewById(R.id.buttonProfilePrayerFindPray);
         Button buttonProfilePrayerMassages = findViewById(R.id.buttonProfilePrayerMassages);
         Button buttonProfilePrayerFavorite = findViewById(R.id.buttonProfilePrayerFavorite);
         Button buttonProfilePrayerChangePassword = findViewById(R.id.buttonProfilePrayerChangePassword);
@@ -78,13 +79,17 @@ public class ProfilePrayerActivity extends AppCompatActivity {
                         textViewProfilePrayerQoute.setText(currentPrayer.getQuote());
                         //try get image
                         storageReference.child("PROFILE_IMAGE").child(currentPrayer.getEmail()).getDownloadUrl()
-                                .addOnSuccessListener(uri -> Picasso.get().load(uri).placeholder(R.drawable.profile).into(imageViewProfilePrayerProfile));
+                                .addOnSuccessListener(uri -> Picasso.get().load(uri).placeholder(R.drawable.avater).into(imageViewProfilePrayerProfile));
                     }
                 });
 
 
         buttonProfilePrayerFindSynagoe.setOnClickListener(v -> {
             Intent intent = new Intent(ProfilePrayerActivity.this, FindSynagogueActivity.class);
+            startActivity(intent);
+        });
+        buttonProfilePrayerFindPray.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfilePrayerActivity.this, FindMinyanActivity.class);
             startActivity(intent);
         });
 

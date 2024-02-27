@@ -30,6 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/EditTextEditSynagogeName" />
 
     <ScrollView
+        android:id="@+id/scrollView3"
         android:layout_width="415dp"
         android:layout_height="0dp"
         android:layout_marginTop="24dp"
@@ -164,5 +165,17 @@
         android:text="שמור שינויים"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/buttonEditSynagogeDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:text="מחק בית כנסת"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonEditSynagogeSave"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/buttonEditSynagogeSave"
+        app:layout_constraintTop_toTopOf="@+id/buttonEditSynagogeSave" />
 </androidx.constraintlayout.widget.ConstraintLayout>

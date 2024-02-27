@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
@@ -26,12 +27,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.minyan.Objects.Gabai;
 import com.example.minyan.Objects.Pray;
 import com.example.minyan.Objects.Synagoge;
 import com.example.minyan.Objects.enums.Kind;
 import com.example.minyan.Objects.enums.Nosah;
 import com.example.minyan.Objects.relations.PrayInSynagoge;
 import com.example.minyan.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -45,6 +48,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class EditSynagogeActivity extends AppCompatActivity {
 
@@ -59,6 +63,7 @@ public class EditSynagogeActivity extends AppCompatActivity {
     private final int PICK_IMAGE_REQUEST = 71;
     ImageView imageAddPhotoImage;
     private Uri filePath;
+    private Gabai currentGabai;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +82,7 @@ public class EditSynagogeActivity extends AppCompatActivity {
         ImageView imageViewEditSnagogeImage = findViewById(R.id.imageViewEditSnagogeImage);
 
         Button buttonEditSynagogeSave = findViewById(R.id.buttonEditSynagogeSave);
+        Button buttonEditSynagogeDelete = findViewById(R.id.buttonEditSynagogeDelete);
 
         ArrayAdapter<Nosah> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Nosah.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -85,11 +91,18 @@ public class EditSynagogeActivity extends AppCompatActivity {
 
         String s_id = getIntent().getStringExtra(Synagoge.SYNAGOGE);
 
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection(Synagoge.SYNAGOGE).document(s_id);
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
+        db.collection(getString(R.string.entry_gabai)).document(getString(R.string.entry_gabai) + "|" + Objects.requireNonNull(mAuth.getCurrentUser()).getEmail())
+                .get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        currentGabai = task.getResult().toObject(Gabai.class);
+                    }
+                });
         docRef.get().addOnCompleteListener(getSynagogeTask -> {
             if (getSynagogeTask.isSuccessful()) {
                 currentSynagoge = getSynagogeTask.getResult().toObject(Synagoge.class);
@@ -161,6 +174,24 @@ public class EditSynagogeActivity extends AppCompatActivity {
             currentPray = null;
             EditPrayDialog editPrayDialog = new EditPrayDialog();
             editPrayDialog.show();
+        });
+        // delete the synagogue
+        buttonEditSynagogeDelete.setOnClickListener(v -> {
+            if (currentGabai != null) {
+                new AlertDialog.Builder(this)
+                        .setTitle("מחיקה")
+                        .setMessage("האם אתה בטוח?")
+                        .setPositiveButton("כן", (dialog, which) -> {
+
+                            currentGabai.delSynagogue(currentSynagoge);
+                            Intent intent = new Intent(EditSynagogeActivity.this, ProfileGabiActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        })
+                        .setNegativeButton("לא", null)
+                        .show();
+            }
+
         });
         buttonEditSynagogeEditImage.setOnClickListener(v -> {
             addPhotoDialog addPhotoDialog = new addPhotoDialog();

@@ -19,7 +19,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/profile" />
+        app:srcCompat="@drawable/avater" />
 
     <TextView
         android:id="@+id/textViewProfilePrayerName"
@@ -36,11 +36,21 @@
         android:id="@+id/buttonProfilePrayerFindSynagoe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="חפש בתי כנסת"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewProfilePrayerQoute" />
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/search_synagogue"
+        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintEnd_toStartOf="@+id/view" />
+
+    <Button
+        android:id="@+id/buttonProfilePrayerFindPray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/search_pray"
+        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintStart_toEndOf="@+id/view" />
 
     <TextView
         android:id="@+id/textViewProfilePrayerQoute"
@@ -58,21 +68,21 @@
         android:id="@+id/buttonProfilePrayerMassages"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="הודעות"
-        app:layout_constraintEnd_toEndOf="@+id/buttonProfilePrayerFindSynagoe"
-        app:layout_constraintStart_toStartOf="@+id/buttonProfilePrayerFindSynagoe"
-        app:layout_constraintTop_toBottomOf="@+id/buttonProfilePrayerFindSynagoe" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/massages"
+        app:layout_constraintStart_toEndOf="@+id/view"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
 
     <Button
         android:id="@+id/buttonProfilePrayerFavorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="מועדפים"
-        app:layout_constraintEnd_toEndOf="@+id/buttonProfilePrayerMassages"
-        app:layout_constraintStart_toStartOf="@+id/buttonProfilePrayerMassages"
-        app:layout_constraintTop_toBottomOf="@+id/buttonProfilePrayerMassages" />
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/favorite"
+        app:layout_constraintEnd_toStartOf="@+id/view"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
 
     <Button
         android:id="@+id/buttonProfilePrayerToGabai"
@@ -122,10 +132,19 @@
         android:id="@+id/buttonProfilePrayerChangePassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:text="שנה סיסמא"
-        app:layout_constraintEnd_toEndOf="@+id/buttonProfilePrayerFavorite"
-        app:layout_constraintStart_toStartOf="@+id/buttonProfilePrayerFavorite"
-        app:layout_constraintTop_toBottomOf="@+id/buttonProfilePrayerFavorite" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

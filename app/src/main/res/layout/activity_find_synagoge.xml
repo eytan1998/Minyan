@@ -11,85 +11,23 @@
         android:id="@+id/mapFindSynagoge"
         class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonFindSynagogueViewSynagogue"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seekBarFindSynagogeDistance" />
-
-    <Button
-        android:id="@+id/buttonFindSynagogueViewSynagogue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="כנסת לבית כנסת"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonFindSynagogueSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="חפש"
-        app:layout_constraintBottom_toBottomOf="@+id/checkBoxFindSynagogeArvit"
-        app:layout_constraintEnd_toStartOf="@+id/checkBoxFindSynagogeArvit" />
-
-    <CheckBox
-        android:id="@+id/checkBoxFindSynagogeSharit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:checked="true"
-        android:text="שחרית "
+        android:layout_marginBottom="32dp"
+        android:scaleX="1.3"
+        android:scaleY="1.3"
+        android:text="חפש באזור זה"
+        app:layout_constraintBottom_toBottomOf="@+id/mapFindSynagoge"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <CheckBox
-        android:id="@+id/checkBoxFindSynagogeMinha"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:checked="true"
-        android:text="מנחה"
-        app:layout_constraintBottom_toBottomOf="@+id/checkBoxFindSynagogeSharit"
-        app:layout_constraintEnd_toStartOf="@+id/checkBoxFindSynagogeSharit" />
-
-    <CheckBox
-        android:id="@+id/checkBoxFindSynagogeArvit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:checked="true"
-        android:text="ערבית"
-        app:layout_constraintBottom_toBottomOf="@+id/checkBoxFindSynagogeMinha"
-        app:layout_constraintEnd_toStartOf="@+id/checkBoxFindSynagogeMinha" />
-
-    <CheckBox
-        android:id="@+id/checkBoxFindSynagogeMacro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="בלי קשר לתפילה"
-        app:layout_constraintEnd_toEndOf="@+id/checkBoxFindSynagogeSharit"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxFindSynagogeSharit" />
-
-    <SeekBar
-        android:id="@+id/seekBarFindSynagogeDistance"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxFindSynagogeMacro" />
-
-    <TextView
-        android:id="@+id/textViewFindSynagogeDistance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/seekBarFindSynagogeDistance"
-        app:layout_constraintStart_toStartOf="@+id/seekBarFindSynagogeDistance" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -43,17 +43,17 @@
         app:layout_constraintHorizontal_bias="0.07"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/profile" />
+        app:srcCompat="@drawable/avater" />
 
     <Button
         android:id="@+id/buttonProfileGabiManageSynagoe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="נהל בתי כנסת"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textViewProfileGabaiQoute"
-        app:layout_constraintTop_toBottomOf="@+id/textViewProfileGabaiQoute" />
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/manage_synagogue"
+        app:layout_constraintBottom_toTopOf="@+id/view2"
+        app:layout_constraintEnd_toStartOf="@+id/view2" />
 
     <TextView
         android:id="@+id/textViewProfileGabaiQoute"
@@ -70,21 +70,21 @@
         android:id="@+id/buttonProfileGabiMassages"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="הודעות"
-        app:layout_constraintEnd_toEndOf="@+id/buttonProfileGabiManageSynagoe"
-        app:layout_constraintStart_toStartOf="@+id/buttonProfileGabiManageSynagoe"
-        app:layout_constraintTop_toBottomOf="@+id/buttonProfileGabiManageSynagoe" />
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/massages"
+        app:layout_constraintBottom_toTopOf="@+id/view2"
+        app:layout_constraintStart_toEndOf="@+id/view2" />
 
     <Button
         android:id="@+id/buttonProfileGabiChangePassward"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:text="החלפת סיסמא"
-        app:layout_constraintEnd_toEndOf="@+id/buttonProfileGabiMassages"
-        app:layout_constraintStart_toStartOf="@+id/buttonProfileGabiMassages"
-        app:layout_constraintTop_toBottomOf="@+id/buttonProfileGabiMassages" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/textView17"
@@ -93,5 +93,14 @@
         android:text="ברוך הבא לגבאי"
         app:layout_constraintBottom_toTopOf="@+id/textViewProfileGabaiName"
         app:layout_constraintStart_toStartOf="@+id/textViewProfileGabaiName" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

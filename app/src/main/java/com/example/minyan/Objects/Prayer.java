@@ -25,6 +25,12 @@ public class Prayer  {
 
     }
 
+    public Prayer(Prayer currentPrayer) {
+        this.name = currentPrayer.getName();
+        this.email = currentPrayer.getEmail();
+        this.quote = currentPrayer.getQuote();
+    }
+
     public void unLikeSynagogue(Synagoge synagoge) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(LikeSynagogue.LIKE_SYNAGOGUE).whereEqualTo("s_id", synagoge.getS_id())
@@ -42,7 +48,6 @@ public class Prayer  {
     }
 
     public void likeSynagogue(Synagoge synagoge) {
-        //todo if failed
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         LikeSynagogue likeSynagogue = new LikeSynagogue(synagoge.getS_id(), this.email);
         db.collection(LikeSynagogue.LIKE_SYNAGOGUE).add(likeSynagogue);
@@ -69,7 +74,6 @@ public class Prayer  {
     }
 
     public String favoriteSynagogue(Synagoge synagoge) {
-        //todo if failed
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FavoriteSynagoge favoriteSynagoge = new FavoriteSynagoge(synagoge.getS_id(), this.email);
         db.collection(FavoriteSynagoge.FAVORITE_SYNAGOGUE).add(favoriteSynagoge);

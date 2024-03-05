@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/viewEditPrayer"
+        android:layout_width="325dp"
+        android:layout_height="250dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="ערכת פרטי מתפלל"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/buttonEditFieldExit"
+        app:layout_constraintStart_toStartOf="@+id/viewEditPrayer"
+        app:layout_constraintTop_toTopOf="@+id/viewEditPrayer" />
+
+    <EditText
+        android:id="@+id/editTextEditPrayerName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:hint="שם"
+        app:layout_constraintBottom_toTopOf="@+id/editTextEditPrayerQuote"
+        app:layout_constraintEnd_toEndOf="@+id/viewEditPrayer"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/viewEditPrayer" />
+
+    <EditText
+        android:id="@+id/editTextEditPrayerQuote"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="ציטוט"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutEditPrayer"
+        app:layout_constraintEnd_toEndOf="@+id/editTextEditPrayerName"
+        app:layout_constraintStart_toStartOf="@+id/editTextEditPrayerName" />
+
+    <Button
+        android:id="@+id/buttonEditPrayerExit"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@android:drawable/ic_menu_close_clear_cancel"
+        app:layout_constraintEnd_toEndOf="@+id/viewEditPrayer"
+        app:layout_constraintTop_toTopOf="@+id/viewEditPrayer" />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutEditPrayer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/viewEditPrayer"
+        app:layout_constraintEnd_toEndOf="@+id/viewEditPrayer"
+        app:layout_constraintStart_toStartOf="@+id/viewEditPrayer">
+
+        <Button
+            android:id="@+id/buttonEditPrayerSend"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="שליחה" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

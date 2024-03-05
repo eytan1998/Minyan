@@ -248,7 +248,6 @@ public class EditSynagogeActivity extends AppCompatActivity {
 
                     prays.add(currentPray);
                     currentSynagoge.updatePray(currentPray);
-                    //todo change this
                     recyclerAdapter.notifyDataSetChanged();
 
                 } else {

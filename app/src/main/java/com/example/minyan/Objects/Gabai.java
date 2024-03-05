@@ -28,6 +28,15 @@ public class Gabai {
 
     }
 
+    public Gabai(Gabai currentGabai) {
+        this.name = currentGabai.getName();
+        this.email = currentGabai.getEmail();
+        this.quote = currentGabai.getQuote();
+        this.phone = currentGabai.getPhone();
+        this.isVerified = currentGabai.isVerified();
+
+    }
+
     public void delSynagogue(Synagoge synagoge) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(Synagoge.SYNAGOGE).document(synagoge.getS_id()).delete();
@@ -46,7 +55,6 @@ public class Gabai {
     }
 
     public String addSynagogue(Synagoge synagoge) {
-        //todo if failed
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(Synagoge.SYNAGOGE).document(synagoge.getS_id()).set(synagoge);
         OwnSynagoge ownSynagoge = new OwnSynagoge(synagoge.getS_id(), this.email);

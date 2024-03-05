@@ -59,7 +59,6 @@ public class ManageSynagogeActivity extends AppCompatActivity implements OnMapRe
 
     Gabai currentGabai;
     Synagoge currentSynagoge;
-    Marker currentMarker;
     Marker newMarker;
     boolean isInAdd = false;
 
@@ -138,12 +137,12 @@ public class ManageSynagogeActivity extends AppCompatActivity implements OnMapRe
         //set SATELLITE with names
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         //set start location at jerusalem
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(31.777980242130955, 35.2352939173555), 10f));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(31.777980242130955, 35.2352939173555), 13f));
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         //get the center of map position
-        mMap.setOnCameraIdleListener(() -> {
+        mMap.setOnCameraMoveListener(() -> {
             //so can move with cemra
             if (isInAdd) {
                 newMarker.setPosition(mMap.getCameraPosition().target);

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/viewEditGabai"
+        android:layout_width="325dp"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="עריכת פרטי גבאי"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/buttonEditGabaiExit"
+        app:layout_constraintStart_toStartOf="@+id/viewEditGabai"
+        app:layout_constraintTop_toTopOf="@+id/viewEditGabai" />
+
+    <EditText
+        android:id="@+id/editTextEditGabaiPhone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:hint="@string/phone"
+        android:inputType="phone"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutEditGabai"
+        app:layout_constraintEnd_toEndOf="@+id/viewEditGabai"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/viewEditGabai" />
+
+    <EditText
+        android:id="@+id/editTextEditGabaiName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:hint="@string/full_name"
+        app:layout_constraintBottom_toTopOf="@+id/editTextEditGabaiQuote"
+        app:layout_constraintEnd_toEndOf="@+id/viewEditGabai"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/viewEditGabai" />
+
+    <EditText
+        android:id="@+id/editTextEditGabaiQuote"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="ציטוט"
+        app:layout_constraintBottom_toTopOf="@+id/editTextEditGabaiPhone"
+        app:layout_constraintEnd_toEndOf="@+id/editTextEditGabaiName"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/editTextEditGabaiName" />
+
+    <Button
+        android:id="@+id/buttonEditGabaiExit"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@android:drawable/ic_menu_close_clear_cancel"
+        app:layout_constraintEnd_toEndOf="@+id/viewEditGabai"
+        app:layout_constraintTop_toTopOf="@+id/viewEditGabai" />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutEditGabai"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/viewEditGabai"
+        app:layout_constraintEnd_toEndOf="@+id/viewEditGabai"
+        app:layout_constraintStart_toStartOf="@+id/viewEditGabai">
+
+        <Button
+            android:id="@+id/buttonEditGabaiSend"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="שליחה" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

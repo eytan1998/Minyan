@@ -186,7 +186,6 @@ public class ViewSynagogeActivity extends AppCompatActivity {
 
                                         });
 
-                                //todo image
 
 
                             }

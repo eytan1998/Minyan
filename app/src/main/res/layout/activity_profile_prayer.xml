@@ -36,9 +36,11 @@
         android:id="@+id/buttonProfilePrayerFindSynagoe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/search_synagogue"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
         app:layout_constraintBottom_toTopOf="@+id/view"
         app:layout_constraintEnd_toStartOf="@+id/view" />
 
@@ -46,9 +48,11 @@
         android:id="@+id/buttonProfilePrayerFindPray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/search_pray"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
         app:layout_constraintBottom_toTopOf="@+id/view"
         app:layout_constraintStart_toEndOf="@+id/view" />
 
@@ -68,9 +72,11 @@
         android:id="@+id/buttonProfilePrayerMassages"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/massages"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
         app:layout_constraintStart_toEndOf="@+id/view"
         app:layout_constraintTop_toBottomOf="@+id/view" />
 
@@ -78,9 +84,11 @@
         android:id="@+id/buttonProfilePrayerFavorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
         android:background="@drawable/favorite"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
         app:layout_constraintEnd_toStartOf="@+id/view"
         app:layout_constraintTop_toBottomOf="@+id/view" />
 
@@ -101,7 +109,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="24dp"
         android:text="מעוניין להיות גבאי?"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -146,5 +154,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/buttonProfilePrayerEditPrayer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/profile_edit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

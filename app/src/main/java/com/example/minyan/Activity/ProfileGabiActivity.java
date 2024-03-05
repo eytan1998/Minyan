@@ -21,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.minyan.Objects.Gabai;
+import com.example.minyan.Objects.Pray;
+import com.example.minyan.Objects.relations.PrayInSynagoge;
 import com.example.minyan.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -46,6 +48,10 @@ public class ProfileGabiActivity extends AppCompatActivity {
     ImageView imageViewProfileGabiProfile;
     private Uri filePath;
 
+    TextView textViewProfileGabaiName;
+    TextView textViewProfileGabaiQoute;
+    TextView textViewProfileGabaiPhone;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,13 +59,15 @@ public class ProfileGabiActivity extends AppCompatActivity {
 
         imageViewProfileGabiProfile = findViewById(R.id.imageViewProfileGabiProfile);
 
-        TextView textViewProfileGabaiName = findViewById(R.id.textViewProfileGabaiName);
-        TextView textViewProfileGabaiQoute = findViewById(R.id.textViewProfileGabaiQoute);
+        textViewProfileGabaiName = findViewById(R.id.textViewProfileGabaiName);
+        textViewProfileGabaiQoute = findViewById(R.id.textViewProfileGabaiQoute);
+        textViewProfileGabaiPhone = findViewById(R.id.textViewProfileGabaiPhone);
 
         Button buttonProfileGabiChangePassword = findViewById(R.id.buttonProfileGabiChangePassward);
         Button buttonProfileGabiManageSynagoe = findViewById(R.id.buttonProfileGabiManageSynagoe);
         Button buttonProfileGabiMassages = findViewById(R.id.buttonProfileGabiMassages);
         FloatingActionButton buttonProfileGabaiEditImage = findViewById(R.id.buttonProfileGabaiEditImage);
+        FloatingActionButton buttonProfileGabaiEditGabai = findViewById(R.id.buttonProfileGabaiEditGabai);
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -73,6 +81,7 @@ public class ProfileGabiActivity extends AppCompatActivity {
                         currentGabai = task.getResult().toObject(Gabai.class);
                         textViewProfileGabaiName.setText(currentGabai.getName());
                         textViewProfileGabaiQoute.setText(currentGabai.getQuote());
+                        textViewProfileGabaiPhone.setText(currentGabai.getPhone());
 
                         //try get image
                         storageReference.child("PROFILE_IMAGE").child(currentGabai.getEmail()).getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri)
@@ -99,6 +108,11 @@ public class ProfileGabiActivity extends AppCompatActivity {
             AddPhotoDialog addPhotoDialog = new AddPhotoDialog();
             addPhotoDialog.show();
         });
+        buttonProfileGabaiEditGabai.setOnClickListener(v -> {
+            EditGabaiDialog editGabaiDialog = new EditGabaiDialog(ProfileGabiActivity.this);
+            editGabaiDialog.show();
+        });
+
     }
 
     /**
@@ -246,6 +260,65 @@ public class ProfileGabiActivity extends AppCompatActivity {
             });
 
             buttonChangePasswordCancel.setOnClickListener(v -> dismiss());
+        }
+    }
+
+    /**
+     * =========================editGabaiDialog==================================
+     */
+
+    class EditGabaiDialog extends Dialog {
+
+
+        public EditGabaiDialog(@NonNull Context context) {
+            super(context);
+        }
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.dialog_edit_gabai);
+
+            EditText editTextEditGabaiName = findViewById(R.id.editTextEditGabaiName);
+            EditText editTextEditGabaiQuote = findViewById(R.id.editTextEditGabaiQuote);
+            EditText editTextEditGabaiPhone = findViewById(R.id.editTextEditGabaiPhone);
+
+            Button buttonEditFieldSend = findViewById(R.id.buttonEditGabaiSend);
+            Button buttonEditFieldExit = findViewById(R.id.buttonEditGabaiExit);
+
+            editTextEditGabaiName.setText(currentGabai.getName());
+            editTextEditGabaiQuote.setText(currentGabai.getQuote());
+            editTextEditGabaiPhone.setText(currentGabai.getPhone());
+
+            buttonEditFieldSend.setOnClickListener(v -> {
+                String name = editTextEditGabaiName.getText().toString().trim();
+                String quote = editTextEditGabaiQuote.getText().toString().trim();
+                String phone = editTextEditGabaiPhone.getText().toString().trim();
+
+                if (name.isEmpty() || quote.isEmpty() || phone.isEmpty()) {
+                    Toast.makeText(getContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                    dismiss();
+                }
+                Gabai newGabai = new Gabai(currentGabai);
+                newGabai.setName(name);
+                newGabai.setQuote(quote);
+                newGabai.setPhone(phone);
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection(getString(R.string.entry_gabai)).document(currentGabai.getEntry(ProfileGabiActivity.this))
+                        .set(newGabai).addOnSuccessListener(unused -> {
+                            textViewProfileGabaiName.setText(name);
+                            textViewProfileGabaiQoute.setText(quote);
+                            textViewProfileGabaiPhone.setText(phone);
+                            currentGabai = newGabai;
+                            Toast.makeText(getContext(), "נשמר בהצלחה", Toast.LENGTH_SHORT).show();
+                            dismiss();
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(getContext(), "נכשל", Toast.LENGTH_SHORT).show();
+                            dismiss();
+                        });
+            });
+            buttonEditFieldExit.setOnClickListener(v -> dismiss());
         }
     }
 

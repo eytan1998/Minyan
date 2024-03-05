@@ -7,6 +7,17 @@
     tools:context=".Activity.ProfileGabiActivity">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/buttonProfileGabaiEditGabai"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/profile_edit" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/buttonProfileGabaiEditImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -49,18 +60,20 @@
         android:id="@+id/buttonProfileGabiManageSynagoe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/manage_synagogue"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
         app:layout_constraintBottom_toTopOf="@+id/view2"
-        app:layout_constraintEnd_toStartOf="@+id/view2" />
+        app:layout_constraintEnd_toEndOf="@+id/view2"
+        app:layout_constraintStart_toStartOf="@+id/view2" />
 
     <TextView
         android:id="@+id/textViewProfileGabaiQoute"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/imageViewProfileGabiProfile"
@@ -70,11 +83,13 @@
         android:id="@+id/buttonProfileGabiMassages"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/massages"
-        app:layout_constraintBottom_toTopOf="@+id/view2"
-        app:layout_constraintStart_toEndOf="@+id/view2" />
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+        app:layout_constraintEnd_toEndOf="@+id/view2"
+        app:layout_constraintStart_toStartOf="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@+id/view2" />
 
     <Button
         android:id="@+id/buttonProfileGabiChangePassward"
@@ -102,5 +117,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewProfileGabaiPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="@+id/textViewProfileGabaiName"
+        app:layout_constraintTop_toBottomOf="@+id/textViewProfileGabaiName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -46,8 +46,6 @@ public class FindMinyanActivity extends AppCompatActivity {
 
         Spinner spinnerFindMinyanNosah = findViewById(R.id.spinnerFindMinyanNosah);
         Spinner spinnerFindMinyanPray = findViewById(R.id.spinnerFindMinyanPray);
-        EditText editTextFindMinyanTime = findViewById(R.id.editTextFindMinyanTime);
-        EditText editTextFindMinyanDistance = findViewById(R.id.editTextFindMinyanDistance);
         Button buttonFindMinyanSearch = findViewById(R.id.buttonFindMinyanSearch);
         recycleViewFindMinyan = findViewById(R.id.recycleViewFindMinyan);
 
@@ -132,7 +130,7 @@ public class FindMinyanActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull RecyclerAdapterPray.ViewHolder holder, int position) {
             holder.TextViewlist_iteam.setText(prayAndSynagogueList.get(position).toString());
-//            holder.Buttonlist_prayDel.setVisibility(View.INVISIBLE);
+            holder.Buttonlist_prayDel.setVisibility(View.INVISIBLE);
         }
 
         @Override

@@ -46,6 +46,10 @@ public class ProfilePrayerActivity extends AppCompatActivity {
     ImageView imageViewProfilePrayerProfile;
     private Uri filePath;
 
+
+    TextView textViewProfilePrayerName;
+    TextView textViewProfilePrayerQoute;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +57,8 @@ public class ProfilePrayerActivity extends AppCompatActivity {
 
         imageViewProfilePrayerProfile = findViewById(R.id.imageViewProfilePrayerProfile);
 
-        TextView textViewProfilePrayerName = findViewById(R.id.textViewProfilePrayerName);
-        TextView textViewProfilePrayerQoute = findViewById(R.id.textViewProfilePrayerQoute);
+        textViewProfilePrayerName = findViewById(R.id.textViewProfilePrayerName);
+        textViewProfilePrayerQoute = findViewById(R.id.textViewProfilePrayerQoute);
 
 
         Button buttonProfilePrayerToGabai = findViewById(R.id.buttonProfilePrayerToGabai);
@@ -64,6 +68,7 @@ public class ProfilePrayerActivity extends AppCompatActivity {
         Button buttonProfilePrayerFavorite = findViewById(R.id.buttonProfilePrayerFavorite);
         Button buttonProfilePrayerChangePassword = findViewById(R.id.buttonProfilePrayerChangePassword);
         FloatingActionButton buttonProfilePrayerEditImage = findViewById(R.id.buttonProfilePrayerEditImage);
+        FloatingActionButton buttonProfilePrayerEditPrayer = findViewById(R.id.buttonProfilePrayerEditPrayer);
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -129,6 +134,10 @@ public class ProfilePrayerActivity extends AppCompatActivity {
             AddPhotoDialog addPhotoDialog = new AddPhotoDialog();
             addPhotoDialog.show();
         });
+        buttonProfilePrayerEditPrayer.setOnClickListener(v -> {
+            EditPrayerDialog editPrayerDialog = new EditPrayerDialog(ProfilePrayerActivity.this);
+            editPrayerDialog.show();
+        });
 
 
     }
@@ -183,7 +192,60 @@ public class ProfilePrayerActivity extends AppCompatActivity {
         }
 
     }
+    /**
+     * =========================editPrayerDialog==================================
+     */
 
+    class EditPrayerDialog extends Dialog {
+
+
+        public EditPrayerDialog(@NonNull Context context) {
+            super(context);
+        }
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.dialog_edit_prayer);
+
+            EditText editTextEditPrayerName = findViewById(R.id.editTextEditPrayerName);
+            EditText editTextEditPrayerQuote = findViewById(R.id.editTextEditPrayerQuote);
+
+            Button buttonEditPrayerSend = findViewById(R.id.buttonEditPrayerSend);
+            Button buttonEditPrayerExit = findViewById(R.id.buttonEditPrayerExit);
+
+            editTextEditPrayerName.setText(currentPrayer.getName());
+            editTextEditPrayerQuote.setText(currentPrayer.getQuote());
+
+            buttonEditPrayerSend.setOnClickListener(v -> {
+                String name = editTextEditPrayerName.getText().toString().trim();
+                String quote = editTextEditPrayerQuote.getText().toString().trim();
+
+                if (name.isEmpty() || quote.isEmpty()) {
+                    Toast.makeText(getContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                    dismiss();
+                }
+                Prayer newPrayer = new Prayer(currentPrayer);
+                newPrayer.setName(name);
+                newPrayer.setQuote(quote);
+
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection(getString(R.string.entry_prayer)).document(currentPrayer.getEntry(ProfilePrayerActivity.this))
+                        .set(newPrayer).addOnSuccessListener(unused -> {
+                            textViewProfilePrayerName.setText(name);
+                            textViewProfilePrayerQoute.setText(quote);
+                            currentPrayer = newPrayer;
+                            Toast.makeText(getContext(), "נשמר בהצלחה", Toast.LENGTH_SHORT).show();
+                            dismiss();
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(getContext(), "נכשל", Toast.LENGTH_SHORT).show();
+                            dismiss();
+                        });
+            });
+            buttonEditPrayerExit.setOnClickListener(v -> dismiss());
+        }
+    }
     /**
      * =========================addPhotoDialog==================================
      */

@@ -19,9 +19,3 @@
 ![19](https://github.com/eytan1998/Minyan/blob/master/img/19.jpg)
 ![20](https://github.com/eytan1998/Minyan/blob/master/img/20.jpg)
 ![21](https://github.com/eytan1998/Minyan/blob/master/img/21.jpg)
-
-ProfilePrayerActivity 1 amit
--> findSynagogeActivity 1 amit
--> FavoriteActivity remove\viewSynagoge (rcycleView) 1 - amit 
--> MassagesActivity (dup) 1  oz
-
